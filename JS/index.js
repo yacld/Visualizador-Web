@@ -6,43 +6,26 @@ document.getElementById('customFile').onchange = function(){
 
   var reader = new FileReader();
   reader.onload = function(progressEvent){
-// Entire file
-  //console.log(this.result);
-
-// By lines
-  var lines = this.result.split('\n');
-  var puntos = [];
-  var colores =  [];
-  for(var line = 0; line < lines.length; line++){
-    //~ console.log(lines[line]);
-    var linea  =  lines[line].split(" ");
-    var json = { "x": linea[0], "y": linea[1], "z": linea[2], color: linea[3] };
-    puntos.push(json);
-
-    if(!colores.includes(linea[3])){
-    colores.push(linea[3]);}
-  }
-  console.log(puntos);
-  console.log(colores);
-  three(puntos, colores);
+    var json = JSON.parse(this.result);
+    var puntos = json.p;
+    console.log(puntos);
+    three(puntos);
   };
 
-reader.readAsText(file);
+  reader.readAsText(file);
 
-//~ three();
-//~ renderer.render(scene, camera);
 };
 
-var three = function(puntos, colores){
+var three = function(puntos){
   var scene = new THREE.Scene();
-  var camera = new THREE.PerspectiveCamera( 75, 1000/800, 0.1, 1000 );
+  var camera = new THREE.PerspectiveCamera( 75, 1000/750, 0.1, 1000 );
   var controls = new THREE.OrbitControls( camera );
   camera.position.set(-15, -0, 500);
 
   controls.update();
 
   var renderer = new THREE.WebGLRenderer();
-  renderer.setSize( 1000, 800 );
+  renderer.setSize( 1000, 780 );
   espacio.appendChild( renderer.domElement );
 
   //especifica las figuras y su material
@@ -50,29 +33,22 @@ var three = function(puntos, colores){
   var colors = 0x0000ff;
 
   puntos.forEach(function(punto){
-
-    var aux = parseInt(colors, 16) + parseInt(punto.color*10000);
-    var aux2 = aux.toString(16);
+    var aux = parseInt(colors, 16) + parseInt(punto.sb*10000);
+    //var aux2 = aux.toString(16);
     var c = new THREE.MeshBasicMaterial( {color: aux}  );
     var puntomesh =  new THREE.Mesh( p, c);
       puntomesh.position.x=parseInt(punto.x);
       puntomesh.position.y=parseInt(punto.y);
       puntomesh.position.z=parseInt(punto.z);
       scene.add(puntomesh);
-
     });
 
   //funcion que coloca la escena en el navegador
   var animate = function () {
     requestAnimationFrame( animate );
     //~ controls.update();
-
     renderer.render(scene, camera);
-
     //menu
-
-
   };
-
   animate();
 };
