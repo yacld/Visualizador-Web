@@ -8,41 +8,61 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="libraries\bootstrap4\css\bootstrap.min.css">
     <!-- Referencia al archivo css -->
-     <link rel="stylesheet" type="text/css" href="CSS\index.css">
+     <link rel="stylesheet" type="text/css" href="CSS\style.css">
 
-    <title>Visualizador</title>
-  </head>
-  <body>
-    <div class ="container-fluid" >
-      <!-- -->
-      <h1>VISUALIZADOR (Red Voronoi)</h1>
+     <title>Visualizador AAA</title>
 
-      <div class ="row">
-        <div class="col-sm-2">    </div>
+   </head>
 
-        <div class="col-sm-8">
-          <div class="custom-file">
-            <input type="file" class="custom-file-input" id="customFile">
-            <label class="custom-file-label" for="customFile">Selecciona archivo</label>
-          </div>
-        </div>
-      </div>
+   <body class="text-center">
 
-      <div class ="row">
-        <div class="container" id="espacio" >
+     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+       <header class="masthead mb-auto">
+         <div class="inner">
+           <h3 class="masthead-brand"><a class="nav-link active" href="#">VISUALIZADOR AAA</a></h3>
+           <nav class="nav nav-masthead">
+             <a class="nav-link active" href="#">inicio</a>
+             <a class="nav-link" href="#"></a>
+             <a class="nav-link" href="#">informacion</a>
+           </nav>
+         </div>
+       </header>
 
-            <div class="progress">
-              <div class="progress-bar progress-bar-striped progress-bar-animated"
-                  role="progressbar" aria-valuenow="100" aria-valuemin="100"
-                  aria-valuemax="100" style="width: 100%">
-              </div>
-            </div>
-
-        </div>
-      </div>
+       <main role="main" class="inner cover">
+         <!--<h1 class="cover-heading">Cover your page.</h1>
+         <p class="lead">Hola</p>
+         <p class="lead">
+           <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
+         </p>-->
 
 
-    </div>
+           <div class="custom-file">
+             <input type="file" class="custom-file-input" id="customFile">
+             <label class="custom-file-label" for="customFile">Selecciona archivo</label>
+           </div>
+
+
+           <div class="container" id="espacio" >
+
+               <div class="progress">
+                 <div class="progress-bar progress-bar-striped progress-bar-animated"
+                     role="progressbar" aria-valuenow="100" aria-valuemin="100"
+                     aria-valuemax="100" style="width: 100%">
+                 </div>
+               </div>
+
+           </div>
+
+
+
+       </main>
+
+       <footer class="mastfoot mt-auto">
+         <div class="inner">
+           <!--<p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>-->
+         </div>
+       </footer>
+     </div>
 
     <!-- Script necesario para realizar la red -->
     <script src = "JS\index.js">		</script>
