@@ -107,6 +107,9 @@ body {
 /*.progress-bar{
   width: 0%;
 }*/
+.dropdown{
+  visibility: hidden;
+}
 
 /*
  * Footer

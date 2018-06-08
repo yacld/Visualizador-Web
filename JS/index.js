@@ -23,10 +23,15 @@ document.getElementById('customFile').onchange = function(){
 var voronoi3 = function(puntos){
   var scene = new THREE.Scene();
   var camera = new THREE.PerspectiveCamera( 75, 1000/800, 0.1, 1000 );
-  var controls = new THREE.OrbitControls( camera );
-  camera.position.set(0, 0, 500);
 
-  controls.update();
+  camera.position.set(350, 350, 700);
+  camera.lookAt(0, 0, 0);
+  var controls = new THREE.OrbitControls( camera );
+  // auto rotate
+  controls.autoRotate = true;
+  controls.autoRotateSpeed = 5;
+  
+
 
   var renderer = new THREE.WebGLRenderer();
   renderer.setSize( 1000, 800 );
@@ -54,12 +59,12 @@ var voronoi3 = function(puntos){
   //funcion que coloca la escena en el navegador
   var animate = function () {
     requestAnimationFrame( animate );
-    //~ controls.update();
+    controls.update();
     renderer.render(scene, camera);
     //menu
   };
 
-  $("#progressBar").css({"visibility":"hidden","height":"0px"});
+  $("#progressBar").css({"visibility":"hidden"});
   $('#progress').css({"visibility":"hidden","height":"0px"});
   animate();
 };
