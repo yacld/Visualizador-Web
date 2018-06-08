@@ -68,13 +68,21 @@ var voronoi3 = function(puntos){
   //$("#progressBar").attr('aria-valuenow', 90).css({"width":"90%"}).text("90%");
   //funcion que coloca la escena en el navegador
   var animate = function () {
-    requestAnimationFrame( animate );
-    controls.update();
+    //requestAnimationFrame( animate );
+    //controls.update();
     renderer.render(scene, camera);
     //menu
   };
 
   $("#progressBar").css({"visibility":"hidden"});
+  $(".custom-file").css({"visibility":"hidden","height":"0px"});
+  $("#customFile").css({"visibility":"hidden","height":"0px"});
   $('#progress').css({"visibility":"hidden","height":"0px"});
+  $('.dropdown').css({"visibility":"visible","height":"30px"});
   animate();
 };
+$(document).ready(function() {
+       $(".dropdown").draggable({
+           cancel: false,
+       });
+ });

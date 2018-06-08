@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="lib\bootstrap4\css\bootstrap.min.css">
     <!-- Referencia al archivo css -->
      <link rel="stylesheet" type="text/css" href="CSS\style.css">
-
+     <script src="lib\jquery-ui-1.12.1\jquery\jquery.js"></script>
      <title>Visualizador AAA</title>
 
    </head>
@@ -28,7 +28,11 @@
          </div>
        </header>
 
+
+
        <main role="main" class="inner cover">
+
+
 
            <div class="custom-file">
              <input type="file" class="custom-file-input" id="customFile">
@@ -45,20 +49,24 @@
 
            </div>
 
-
+           <div class="dropdown">
+             <button class="btn btn-secondary btn-sm dropdown-toggle" type="button"
+                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               MenuVoronoi3D
+             </button>
+             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+               <a class="dropdown-item" href="#">Grises</a>
+               <a class="dropdown-item" href="#">Rotacion</a>
+               <a class="dropdown-item" href="#">Something else here</a>
+             </div>
+           </div>
 
        </main>
 
-       <div class="dropdown">
-         <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-           Dropdown button
-         </button>
-         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-           <a class="dropdown-item" href="#">Action</a>
-           <a class="dropdown-item" href="#">Another action</a>
-           <a class="dropdown-item" href="#">Something else here</a>
-         </div>
-       </div>
+
+       <script>
+
+       </script>
 
        <footer class="mastfoot mt-auto">
          <div class="inner">
@@ -73,9 +81,11 @@
     <script src="lib\three.js"></script>
 		<script src ="lib\OrbitControls.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="lib\jquery-3.3.1.slim.min.js" ></script>
+
+    <!--<script src="lib\jquery-3.3.1.slim.min.js" ></script>-->
     <script src="lib\popper.min.js" ></script>
     <script src="lib\bootstrap4\js\bootstrap.min.js"></script>
+    <script src="lib\jquery-ui-1.12.1\jquery-ui.js"></script>
 
   </body>
 </html>

@@ -109,6 +109,8 @@ body {
 }*/
 .dropdown{
   visibility: hidden;
+  height: 0px;
+  width: 8em;
 }
 
 /*
