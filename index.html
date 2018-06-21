@@ -10,6 +10,9 @@
     <!-- Referencia al archivo css -->
      <link rel="stylesheet" type="text/css" href="CSS\style.css">
      <script src="lib\jquery-ui-1.12.1\jquery\jquery.js"></script>
+     <!-- Script necesario para el uso de Three. js y bootstrao -->
+     <script src="lib\three.js"></script>
+ 		 <script src ="lib\OrbitControls.js"></script>
      <title>Visualizador AAA</title>
 
    </head>
@@ -43,7 +46,7 @@
            <div class="container" id="espacio" >
 
                <div id = "progress" class="progress">
-                 <div id = "progressBar" class="progress-bar progress-bar-striped" role="progressbar"
+                 <div id = "progressBar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
                      aria-valuenow="0" aria-valuemin="0"  aria-valuemax="100" style="">         </div>
                </div>
 
@@ -75,11 +78,10 @@
        </footer>
      </div>
     <!-- Script necesario para realizar la red -->
+    <script src = "JS\voronoi.js">		</script>
     <script src = "JS\index.js">		</script>
 
-    <!-- Script necesario para el uso de Three. js y bootstrao -->
-    <script src="lib\three.js"></script>
-		<script src ="lib\OrbitControls.js"></script>
+
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
     <!--<script src="lib\jquery-3.3.1.slim.min.js" ></script>-->
