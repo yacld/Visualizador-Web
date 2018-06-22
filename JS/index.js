@@ -30,7 +30,8 @@ document.getElementById('customFile').onchange = function(){
     $(".custom-file").css({"visibility":"hidden","height":"0px"});
     $("#customFile").css({"visibility":"hidden","height":"0px"});
     $('#progress').css({"visibility":"hidden","height":"0px"});
-    $('.dropdown').css({"visibility":"visible","height":"20px"});
+    //$('.dropdown').css({"visibility":"visible","height":"20px"});
+    $('.sidebar').css({"visibility":"visible"})
   };
 
   reader.readAsText(file);

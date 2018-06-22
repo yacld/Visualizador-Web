@@ -13,7 +13,7 @@
      <!-- Script necesario para el uso de Three. js y bootstrao -->
      <script src="lib\three.js"></script>
  		 <script src ="lib\OrbitControls.js"></script>
-     <title>Visualizador AAA</title>
+     <title>Visualizador VSyM</title>
 
    </head>
 
@@ -22,7 +22,7 @@
      <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
        <header class="masthead mb-auto">
          <div class="inner">
-           <h3 class="masthead-brand"><a class="nav-link active" href="#">VISUALIZADOR AAA</a></h3>
+           <h3 class="masthead-brand"><a class="nav-link active" href="#">Visualizador VSyM</a></h3>
            <nav class="nav nav-masthead">
              <a class="nav-link active" href="#">inicio</a>
              <a class="nav-link" href="#"></a>
@@ -31,41 +31,87 @@
          </div>
        </header>
 
+       <div class = "container-fluid">
+         <div class = "row">
+           <main role="main" class="inner cover">
 
-
-       <main role="main" class="inner cover">
-
-
-
-           <div class="custom-file">
-             <input type="file" class="custom-file-input" id="customFile">
-             <label class="custom-file-label" for="customFile">Selecciona archivo</label>
-           </div>
-
-
-           <div class="container" id="espacio" >
-
-               <div id = "progress" class="progress">
-                 <div id = "progressBar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                     aria-valuenow="0" aria-valuemin="0"  aria-valuemax="100" style="">         </div>
+               <div class="custom-file">
+                 <input type="file" class="custom-file-input" id="customFile">
+                 <label class="custom-file-label" for="customFile">Selecciona archivo</label>
                </div>
 
-           </div>
 
-           <div class="dropdown">
-             <button class="btn btn-secondary btn-sm dropdown-toggle" type="button"
-                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-               MenuVoronoi3D
-             </button>
-             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-               <a class="dropdown-item" href="#">Grises</a>
-               <a class="dropdown-item" href="#">Rotacion</a>
-               <a class="dropdown-item" href="#">Something else here</a>
-             </div>
-           </div>
+               <div class="container" id="espacio" >
 
-       </main>
+                   <div id = "progress" class="progress">
+                     <div id = "progressBar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                         aria-valuenow="0" aria-valuemin="0"  aria-valuemax="100" style="">         </div>
+                   </div>
 
+               </div>
+
+               <div class="dropdown">
+                 <button class="btn btn-secondary btn-sm dropdown-toggle" type="button"
+                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   MenuVoronoi3D
+                 </button>
+                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                   <a class="dropdown-item" onclick = "vGrises()">Grises</a>
+                   <a class="dropdown-item" href="#">Rotacion</a>
+                   <a class="dropdown-item" href="#">Something else here</a>
+                 </div>
+               </div>
+
+           </main>
+
+           <nav class="d-none d-md-block bg-light sidebar">
+
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mb-2">
+                  <span>MenuVoronoi</span>
+                </h6>
+                <ul class="nav flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link" onclick= "setColor(0,0,1)" href="#">
+                      Azul
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" onclick= "setColor(1,1,1)" href="#">
+                      Grises
+                    </a>
+                  </li>
+                  <li class="nav-item">
+
+                  </li>
+                </ul>
+
+
+                <ul class="nav flex-column mb-2">
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">
+                      Current month
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">
+                      Last quarter
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">
+                      Social engagement
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">
+                      Year-end sale
+                    </a>
+                  </li>
+                </ul>
+
+            </nav>
+         </div>
+       </div>
 
        <script>
 
