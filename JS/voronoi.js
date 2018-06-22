@@ -1,8 +1,14 @@
+function vonoroi ( ){
+    Visualizador.call(this);
+}
 
-/*
+addEventListener('message', function(e){
+  voronoi3(e.data);
+});
+
+
+
 var scene = new THREE.Scene();
-var aspect = window.innerHeigth / window.innerWidth;
-var camera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 );*/
 var colors = 0x0000ff; /* Color blue*/
 var puntosred = [];
 /*var renderer = new THREE.WebGLRenderer();
@@ -11,8 +17,10 @@ espacio.appendChild( renderer.domElement );
 var p = new THREE.BoxGeometry(1, 1, 1);
 var group = new THREE.Group();*/
 
-var voronoi3 = function(puntos){
-  var scene = new THREE.Scene();
+
+
+function voronoi3(puntos){
+//  var scene = new THREE.Scene();
   var aspect = 1000 / 800;
   var camera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 );
 
@@ -57,8 +65,6 @@ var voronoi3 = function(puntos){
     group.add(puntomesh);
     puntosred.push(puntomesh);
   });
-  //setTimeout(puntosmesh(0,puntos),0);
-  //$("#progressBar").attr('aria-valuenow', 90).css({"width":"90%"}).text("90%");
 
   //funcion que coloca la escena en el navegador
   var animate = function () {
@@ -68,26 +74,6 @@ var voronoi3 = function(puntos){
     //menu
   };
 
-  $("#progressBar").css({"visibility":"hidden"});
-  $(".custom-file").css({"visibility":"hidden","height":"0px"});
-  $("#customFile").css({"visibility":"hidden","height":"0px"});
-  $('#progress').css({"visibility":"hidden","height":"0px"});
-  $('.dropdown').css({"visibility":"visible","height":"20px"});
-  animate();
-};
 
-puntosmesh = function(i, puntos){
-  if(puntos.length > i+5){
-    for(i;i<i+4;i++){
-      var aux = parseInt(colors, 16) + parseInt(puntos[i].sb*10000);
-      var c = new THREE.MeshBasicMaterial( {color: aux}  );
-      var puntomesh =  new THREE.Mesh( p, c);
-      puntomesh.position.x=parseInt(puntos[i].x);
-      puntomesh.position.y=parseInt(puntos[i].y);
-      puntomesh.position.z=parseInt(puntos[i].z);
-      group.add(puntomesh);
-      puntosred.push(puntomesh);
-    }
-    setTimeout(puntosmesh(i++, puntos),0);
-  }
+  animate();
 };
