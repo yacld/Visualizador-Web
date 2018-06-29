@@ -9,6 +9,10 @@ a:hover {
   color: #00802b;
 }
 
+ul li{
+  padding: 20px;
+}
+
 /* Custom default button */
 .btn-secondary,
 .btn-secondary:hover,
@@ -98,7 +102,7 @@ body {
 
 .sidebar {
   /*position: fixed;*/
-  visibility: hidden;
+  visibility: visible;
   top: 0;
   bottom: 0;
   left: 0;
@@ -110,6 +114,16 @@ body {
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
   overflow-x: hidden;
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+#voronoi {
+  padding-left: 3em;
+}
+#vor{
+  visibility: hidden;
+  height: 0px;
+}
+.nav-item{
+  height: 0;
 }
 
 .sidebar .nav-link {
@@ -126,6 +140,11 @@ body {
 
 }
 
+.form-check-label{
+  font-size: large;
+  font-weight: 500;
+  color: #00802b;
+}
 
 /*
  * Cover
@@ -143,6 +162,9 @@ body {
 /*.progress-bar{
   width: 0%;
 }*/
+.custom-file-input ~ .custom-file-label::after {
+    content: "Elegir";
+}
 .dropdown{
   visibility: hidden;
   height: 0px;

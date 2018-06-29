@@ -6,61 +6,61 @@ addEventListener('message', function(e){
   voronoi3(e.data);
 });
 
-var scene = new THREE.Scene();
-/*var colors = 0x0000ff; /* Color blue*/
 
 var puntosred = [];
-/*var renderer = new THREE.WebGLRenderer();
-renderer.setSize( 1000, 800 );
-espacio.appendChild( renderer.domElement );
-var p = new THREE.BoxGeometry(1, 1, 1);
-var group = new THREE.Group();*/
+var colors = {};
 
 function voronoi3(puntos){
-//  var scene = new THREE.Scene();
+  //if(renderer==null){
   var aspect = 1000 / 800;
-  var camera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 );
+  camera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 );
 
   camera.position.set(350, 350, 700);
   camera.lookAt(0, 0, 0);
 
-  var renderer = new THREE.WebGLRenderer();
+  renderer = new THREE.WebGLRenderer();
   renderer.setSize( 1000, 800 );
   espacio.appendChild( renderer.domElement );
-
-  var controls = new THREE.OrbitControls( camera, renderer.domElement );
-  // auto rotate
-  /*controls.autoRotate = true;
-  controls.autoRotateSpeed = 15;
+  //scene.setValues( {background:''} );
+  controls = new THREE.OrbitControls( camera, renderer.domElement );
 
   controls.enableDamping = true;
-  controls.dampingFactor = 0.25;*/
+  controls.dampingFactor = 0.25;
 
   controls.minDistance = 200;
   controls.maxDistance = 1000;
 
   var group = new THREE.Group();
   scene.add(group);
-
+  //}
   //especifica las figuras y su material
-  var p = new THREE.BoxGeometry(1, 1, 1);
-  /*var colors = 0x0000ff; /* Color blue/
-  var puntosred = [];*/
+  var colores = {};
+  var cs = [];
 
   puntos.forEach(function(punto){
-    var aux =  punto.sb*111111;
-    var c = new THREE.MeshBasicMaterial( {color: aux}  );
-    var puntomesh =  new THREE.Mesh( p, c);
-    puntomesh.position.x=parseInt(punto.x);
-    puntomesh.position.y=parseInt(punto.y);
-    puntomesh.position.z=parseInt(punto.z);
+    if(!colores.hasOwnProperty(''+punto.sb)){
+      var p = new THREE.Geometry();
+      colores[''+punto.sb] = p ;
+
+      cs.push(punto.sb);
+    }
+      var point = new THREE.Vector3();
+      point.x=parseInt(punto.x);
+      point.y=parseInt(punto.y);
+      point.z=parseInt(punto.z);
+      colores[''+punto.sb].vertices.push(point);
+  });
+  cs.forEach(function(color){
+    var aux =  color*111111;
+    var c = new THREE.PointsMaterial( {color: aux}  );
+    var puntomesh =  new THREE.Points( colores[''+color], c);
     group.add(puntomesh);
     puntosred.push(puntomesh);
   });
   console.log(puntosred);
   //funcion que coloca la escena en el navegador
   var animate = function () {
-        //controls.update();
+    controls.update();
     renderer.render(scene, camera);
     requestAnimationFrame( animate );
     //menu
@@ -68,25 +68,50 @@ function voronoi3(puntos){
   animate();
 };
 
-function vGrises (){
-  puntosred.forEach(function(punto){
-    coloraux = punto.material.color;
-
-    //var aux = parseInt(colors, 16) + parseInt(coloraux*100);
-    punto.material.setValues({color : coloraux});
-  });
-  console.log(puntosred[0].material.color);
+function vGrises (r,g,b){
+  var checkbox = document.getElementById("Check2");
+  var coloraux, coloraux2, caux;
+  setColor(checkbox,r,g,b);
 }
+function vBlue (r,g,b){
+  var checkbox = document.getElementById("Check1");
+  var coloraux, coloraux2, caux;
+  setColor(checkbox,r,g,b);
+}
+function autoR(){
+  var checkbox = document.getElementById("Check3");
+  if(checkbox.checked==true){
+    // auto rotate
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 5;
+  }else{
+    controls.autoRotate = false;
+  }
 
-function setColor (r,g,b){
-  puntosred.forEach(function(punto){
-    var coloraux = punto.material.color;
-    var caux = coloraux.r+ coloraux.g +coloraux.b;
-    coloraux.r =r/caux;
-    coloraux.g =g/caux;
-    coloraux.b =b/caux;
-    //var aux = parseInt(colors, 16) + parseInt(coloraux*100);
-    punto.material.setValues({color : coloraux});
-  });
-  console.log("hecho");
+
+}
+function setColor (checkbox,r,g,b){
+  var coloraux, coloraux2, caux;
+  if(checkbox.checked==true){
+       puntosred.forEach(function(punto){
+         coloraux = punto.material.color;
+         coloraux2 = coloraux.getHex();
+         caux = coloraux.r+ coloraux.g +coloraux.b;
+         coloraux.r =r/caux;
+         coloraux.g =g/caux;
+         coloraux.b =b/caux;
+         punto.material.setValues({color : coloraux});
+         colors[coloraux.getHex()] = coloraux2;
+       });
+  } else {
+        puntosred.forEach(function(punto){
+          coloraux = punto.material.color;
+          caux =colors[coloraux.getHex()];
+          punto.material.setValues({color : caux});
+
+        });
+        colors = {};
+  }
+
+  console.log(colors);
 }

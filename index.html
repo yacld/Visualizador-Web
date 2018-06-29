@@ -34,11 +34,16 @@
        <div class = "container-fluid">
          <div class = "row">
            <main role="main" class="inner cover">
-
-               <div class="custom-file">
-                 <input type="file" class="custom-file-input" id="customFile">
+             <div class="custom-file" id="customFile">
+               <input type="file" class="custom-file-input" id="exampleInputFile" aria-describedby="fileHelp">
+               <label class="custom-file-label" for="exampleInputFile">
+                 Seleccionar Archivo
+               </label>
+             </div>
+               <!--div class="custom-file" id="customFile">
+                 <input type="file" class="custom-file-input" >
                  <label class="custom-file-label" for="customFile">Selecciona archivo</label>
-               </div>
+               </div-->
 
 
                <div class="container" id="espacio" >
@@ -67,48 +72,31 @@
            <nav class="d-none d-md-block bg-light sidebar">
 
                 <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mb-2">
-                  <span>MenuVoronoi</span>
+                  <span>Visualizador VSyM</span>
                 </h6>
-                <ul class="nav flex-column">
+            <div id = "voronoi">
+                <ul class="nav flex-column" id="vor">
                   <li class="nav-item">
-                    <a class="nav-link" onclick= "setColor(0,0,1)" href="#">
-                      Azul
-                    </a>
+                    <div class="form-check">
+                      <input type="checkbox" class="form-check-input" id="Check1" onchange="vBlue(0,0,1)">
+                      <label class="form-check-label" for="exampleCheck1">Azul</label>
+                    </div>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" onclick= "setColor(1,1,1)" href="#">
-                      Grises
-                    </a>
-                  </li>
-                  <li class="nav-item">
 
+                  <li class="nav-item">
+                    <div class="form-check">
+                      <input type="checkbox" class="form-check-input" id="Check2" onchange="vGrises(1,1,1)">
+                      <label class="form-check-label" for="exampleCheck1">Grises</label>
+                    </div>
+                  </li>
+                  <li class="nav-item">
+                    <div class="form-check">
+                      <input type="checkbox" class="form-check-input" id="Check3" onchange="autoR()">
+                      <label class="form-check-label" for="exampleCheck1">Auto Rotar</label>
+                    </div>
                   </li>
                 </ul>
-
-
-                <ul class="nav flex-column mb-2">
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">
-                      Current month
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">
-                      Last quarter
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">
-                      Social engagement
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">
-                      Year-end sale
-                    </a>
-                  </li>
-                </ul>
-
+              </div>
             </nav>
          </div>
        </div>
