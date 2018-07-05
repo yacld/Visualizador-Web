@@ -23,6 +23,7 @@ document.getElementById('exampleInputFile').onchange = function(){
   var reader = new FileReader();
   reader.onload = function(progressEvent){
     var json = JSON.parse(this.result);
+    console.log(json);
     if(json.hasOwnProperty('p')){
       if(scene.children.length > 0){
         while(scene.children.length > 0){
@@ -47,7 +48,7 @@ document.getElementById('exampleInputFile').onchange = function(){
 
 
     }else if(json.hasOwnProperty('sitios')){
-      alert('red porosa')
+      //alert('red porosa')
       if(scene.children.length > 0){
         while(scene.children.length > 0){
           scene.remove(scene.children[0]);
