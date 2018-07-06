@@ -70,12 +70,12 @@ function voronoi3(puntos){
 
 function vGrises (r,g,b){
   var checkbox = document.getElementById("Check2");
-  var coloraux, coloraux2, caux;
+
   setColor(checkbox,r,g,b);
 }
 function vBlue (r,g,b){
   var checkbox = document.getElementById("Check1");
-  var coloraux, coloraux2, caux;
+
   setColor(checkbox,r,g,b);
 }
 function autoR(){

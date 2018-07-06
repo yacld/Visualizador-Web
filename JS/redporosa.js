@@ -2,7 +2,8 @@ function redporosa ( ){
     Visualizador.call(this);
 }
 
-var redporos = [];
+var redporosa = [];
+var colorsp = {};
 
 function porosa(json){
   var aspect = 1000 / 800;
@@ -52,6 +53,7 @@ function porosa(json){
     sphere.position.y = parseInt(y);
     sphere.position.z = parseInt(z);
     scene.add( sphere );
+    redporosa.push(sphere);
 
   }
   var enlacescolores = json.enlacesColor;
@@ -88,6 +90,7 @@ function porosa(json){
       cylinder.rotation.z=1;
     }
     scene.add( cylinder );
+    redporosa.push(cylinder);
 
   }
   console.log(scene);
@@ -98,4 +101,79 @@ function porosa(json){
     //menu
   };
   animate();
+}
+
+function rGrises (r,g,b){
+  var checkbox = document.getElementById("Checkrp2");
+  var coloraux, caux;
+  if(checkbox.checked==true){
+       redporosa.forEach(function(punto){
+         var aux = punto.material.color;
+         coloraux  =punto.material.color;
+         if(aux.r==1 && aux.g==0 && aux.b==0){
+           aux.r = r; aux.g = r; aux.b = r;
+         }else if(aux.r==0 && aux.g==1 && aux.b==0){
+           aux.r = g; aux.g = g; aux.b = g;
+         }else if(aux.r==0 && aux.g==0 && aux.b==1){
+           aux.r = b; aux.g = b; aux.b = b;
+         }
+         punto.material.setValues({color : aux});
+         colorsp[aux.getHex()] = coloraux;
+       });
+  } else {
+        redporosa.forEach(function(punto){
+          var aux = punto.material.color;
+          coloraux  =punto.material.color;
+          if(aux.r == r && aux.g == r && aux.b == r){
+            aux.r=1, aux.g=0, aux.b=0;
+          }else if(aux.r == g && aux.g == g && aux.b == g){
+            aux.r=0, aux.g=1, aux.b=0;
+          }else if(aux.r == b && aux.g == b && aux.b == b){
+            aux.r=0, aux.g=0, aux.b=1;
+          }
+          punto.material.setValues({color : aux});
+
+        });
+        colorsp = {};
+  }
+}
+function rAzul (r,g,b){
+  var checkbox = document.getElementById("Checkrp1");
+
+  setColor(checkbox,r,g,b);
+}
+function rAutoR(){
+  var checkbox = document.getElementById("Checkrp3");
+  if(checkbox.checked==true){
+    // auto rotate
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 5;
+  }else{
+    controls.autoRotate = false;
+  }
+
+
+}
+function setColor (checkbox,r,g,b){
+  var coloraux, coloraux2, caux;
+  if(checkbox.checked==true){
+       redporosa.forEach(function(punto){
+         coloraux = punto.material.color;
+         if(coloraux.r!=0){coloraux.r =0, coloraux.b=r;}
+         else if(coloraux.g!=0){coloraux.g =0,coloraux.b=g;}
+         else if(coloraux.b!=0){coloraux.b =b;}
+         punto.material.setValues({color : coloraux});
+       });
+  } else {
+        redporosa.forEach(function(punto){
+          coloraux = punto.material.color;
+          coloraux2 = punto.material.color;
+          if(coloraux.b==r){coloraux.r =1, coloraux.b=0;}
+          else if(coloraux.b==g){coloraux.g =1,coloraux.b=0;}
+          else if(coloraux.b==b){coloraux.b =1;}
+          punto.material.setValues({color : coloraux});
+
+        });
+        colorsp = {};
+  }
 }

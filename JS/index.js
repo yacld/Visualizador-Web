@@ -12,7 +12,7 @@ worker1.addEventListener('message', function(e) {
 
 function Visualizador (){
   var scene=0,group=0,camera=0,renderer=0,controls=0;
-
+  
 }
 scene = new THREE.Scene({background: '0xffffff'});
 document.getElementById('exampleInputFile').onchange = function(){
@@ -35,7 +35,8 @@ document.getElementById('exampleInputFile').onchange = function(){
       //worker1.postMessage(puntos);
       voronoi3(puntos);
       $('.sidebar-heading').text("MenuVoronoi3D");
-      $('#vor').css({"visibility":"visible", "height":"300px"})
+      $('#MenuVoronoi').css({"visibility":"visible", "height":"300px", "width": "auto"})
+      $('#voronoiMenu').css({"visibility":"visible"})
 
     }else if(json.hasOwnProperty('particles')){
       alert('particulas')
@@ -57,6 +58,8 @@ document.getElementById('exampleInputFile').onchange = function(){
       }
       porosa(json);
 
+      $('#MenuRedPorosa').css({"visibility":"visible", "height":"300px", "width": "auto"})
+      $('#porosMenu').css({"visibility":"visible"})
     }else{
       alert('Selecciona un archivo JSON valido');
     }

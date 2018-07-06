@@ -102,12 +102,12 @@ body {
 
 .sidebar {
   /*position: fixed;*/
-  visibility: visible;
+  /*visibility: hidden;*/
   top: 0;
   bottom: 0;
   left: 0;
-  height: 400px;
-  /*width: 0;*/
+  height: 0px;
+  width: 0px;
   /*z-index: 100; /* Behind the navbar */
   /*padding: 48px 0 0; /* Height of navbar */
   text-align: left;
@@ -115,13 +115,12 @@ body {
   overflow-x: hidden;
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
 }
-#voronoi {
-  padding-left: 3em;
-}
-#vor{
+#voronoiMenu, #porosMenu {
+  padding-left: 2em;
   visibility: hidden;
-  height: 0px;
 }
+
+
 .nav-item{
   height: 0;
 }
