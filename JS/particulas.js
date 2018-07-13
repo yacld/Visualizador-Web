@@ -13,7 +13,7 @@ function sim2(json){
   var aspect = 1000 / 800;
   camera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 );
 
-  camera.position.set(0, 0, 50);
+  camera.position.set(0, 0, 10);
 
   renderer = new THREE.WebGLRenderer();
   renderer.setSize( 1000, 800 );
@@ -35,7 +35,7 @@ function sim2(json){
     var x = particula.pasos[0].x;
     var y = particula.pasos[0].y;
     //var z = particula.pasos[0].z;
-    var p = new THREE.SphereGeometry(.5, 10,10);
+    var p = new THREE.SphereGeometry(.1, 10,10);
     var material = new THREE.MeshBasicMaterial( {color: 0xff0000} );
     var sphere = new THREE.Mesh( p, material );
     sphere.position.x = parseInt(x);
@@ -45,35 +45,36 @@ function sim2(json){
     pars.push(sphere);
 
   });
+  console.log(pars);
   console.log(particulas);
 
-
+  var paso = 1;
   //funcion que coloca la escena en el navegador
-  var animate = function (paso) {
+  var animate = function () {
     controls.update();
     var done = 0;
-    function avanza(paso){
+    function avanza(){
       for(var i = 0; i < particulas.length; i++){
         if(paso < particulas[i].pasos.length){
           pars[i].position.x = parseInt(particulas[i].pasos[paso].x);
           pars[i].position.y = parseInt(particulas[i].pasos[paso].y);
+          
         }else{
           console.log("particula " + i + " terminó");
           done++;
         }
       }
-
+      renderer.render(scene, camera);
+      paso++;
+      requestAnimationFrame( avanza );
     }
-    avanza(paso);
-    renderer.render(scene, camera);
-    if(done==particulas.length){
-      requestAnimationFrame( animate);
+    avanza();
+    //renderer.render(scene, camera);
 
-    }else{
-      requestAnimationFrame( animate(paso+1) );
+    requestAnimationFrame( avanza );
 
-    }
+
     //menu
   };
-  animate(1);
+  animate();
 };
