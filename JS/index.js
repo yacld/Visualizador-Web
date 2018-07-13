@@ -12,7 +12,7 @@ worker1.addEventListener('message', function(e) {
 
 function Visualizador (){
   var scene=0,group=0,camera=0,renderer=0,controls=0;
-  
+
 }
 scene = new THREE.Scene({background: '0xffffff'});
 document.getElementById('exampleInputFile').onchange = function(){
@@ -45,6 +45,11 @@ document.getElementById('exampleInputFile').onchange = function(){
           scene.remove(scene.children[0]);
         }
         console.log("ei");
+      }
+      if(json.type == "2D"){
+        sim2(json);
+      }else{
+        alert("3D");
       }
 
 

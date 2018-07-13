@@ -64,7 +64,7 @@ function porosa(json){
     z=enlaces[i*5+2];
     radio=enlaces[i*5+3];
     rotacion=enlaces[i*5+4];
-    var p = new THREE.CylinderGeometry(radio,radio,radiomax*3,32);
+    var p = new THREE.CylinderGeometry(radio,radio,radiomax*3,10);
     if(enlacescolores[i]==0){
       var material = new THREE.MeshBasicMaterial( {color: 0xff0000} );
     }else if(enlacescolores[i]==1){

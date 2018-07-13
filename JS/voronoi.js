@@ -15,8 +15,7 @@ function voronoi3(puntos){
   var aspect = 1000 / 800;
   camera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 );
 
-  camera.position.set(350, 350, 700);
-  camera.lookAt(0, 0, 0);
+  camera.position.set(350, 350, 350);
 
   renderer = new THREE.WebGLRenderer();
   renderer.setSize( 1000, 800 );
@@ -24,20 +23,22 @@ function voronoi3(puntos){
   //scene.setValues( {background:''} );
   controls = new THREE.OrbitControls( camera, renderer.domElement );
 
-  controls.enableDamping = true;
-  controls.dampingFactor = 0.25;
+  controls.enableDamping = false;
+  //controls.dampingFactor = 0.25;
 
-  controls.minDistance = 200;
+  controls.maxDistance =500;
   controls.maxDistance = 1000;
-
   var group = new THREE.Group();
   scene.add(group);
   //}
   //especifica las figuras y su material
   var colores = {};
   var cs = [];
-
+  var mx=-10000,my=-10000,mz=-10000;
   puntos.forEach(function(punto){
+    var px = parseInt(punto.x);
+    var py = parseInt(punto.y);
+    var pz = parseInt(punto.z);
     if(!colores.hasOwnProperty(''+punto.sb)){
       var p = new THREE.Geometry();
       colores[''+punto.sb] = p ;
@@ -45,9 +46,13 @@ function voronoi3(puntos){
       cs.push(punto.sb);
     }
       var point = new THREE.Vector3();
-      point.x=parseInt(punto.x);
-      point.y=parseInt(punto.y);
-      point.z=parseInt(punto.z);
+      point.x=px;
+      point.y=py;
+      point.z=pz;
+      if(px>mx) mx=px;
+      if(py>my) my=py;
+      if(pz>mz) mz=pz;
+
       colores[''+punto.sb].vertices.push(point);
   });
   cs.forEach(function(color){
@@ -58,11 +63,18 @@ function voronoi3(puntos){
     puntosred.push(puntomesh);
   });
   console.log(puntosred);
+  console.log(controls);
+  var centro = new THREE.Vector3();
+  centro.x = mx/2;
+  centro.y = my/2;
+  centro.z = mz/2;
+  controls.target =  centro;
+
   //funcion que coloca la escena en el navegador
   var animate = function () {
     controls.update();
     renderer.render(scene, camera);
-    requestAnimationFrame( animate );
+    requestAnimationFrame( animate() );
     //menu
   };
   animate();
