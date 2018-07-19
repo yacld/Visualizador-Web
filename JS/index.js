@@ -14,7 +14,11 @@ function Visualizador (){
   var scene=0,group=0,camera=0,renderer=0,controls=0;
 
 }
-scene = new THREE.Scene({background: '0xffffff'});
+
+renderer = new THREE.WebGLRenderer();
+renderer.setSize( 1000, 800 );
+
+
 document.getElementById('exampleInputFile').onchange = function(){
 
   $("#progress").css({"visibility":"visible","height":"40px"});
@@ -25,11 +29,11 @@ document.getElementById('exampleInputFile').onchange = function(){
     var json = JSON.parse(this.result);
     console.log(json);
     if(json.hasOwnProperty('p')){
-      if(scene.children.length > 0){
+      /*if(scene.children.length > 0){
         while(scene.children.length > 0){
           scene.remove(scene.children[0]);
         }
-      }
+      }*/
       var puntos = json.p;
       console.log(puntos);
       //worker1.postMessage(puntos);
@@ -40,12 +44,12 @@ document.getElementById('exampleInputFile').onchange = function(){
 
     }else if(json.hasOwnProperty('particles')){
       alert('particulas')
-      if(scene.children.length > 0){
+      /*if(scene.children.length > 0){
         while(scene.children.length > 0){
           scene.remove(scene.children[0]);
         }
         console.log("ei");
-      }
+      }*/
       if(json.type == "2D"){
         sim2(json);
       }else{
@@ -55,12 +59,12 @@ document.getElementById('exampleInputFile').onchange = function(){
 
     }else if(json.hasOwnProperty('sitios')){
       //alert('red porosa')
-      if(scene.children.length > 0){
+      /*if(scene.children.length > 0){
         while(scene.children.length > 0){
           scene.remove(scene.children[0]);
         }
         console.log("ei");
-      }
+      }*/
       porosa(json);
 
       $('#MenuRedPorosa').css({"visibility":"visible", "height":"300px", "width": "auto"})

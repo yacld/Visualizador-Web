@@ -15,8 +15,7 @@ function sim2(json){
 
   camera.position.set(0, 0, 10);
 
-  renderer = new THREE.WebGLRenderer();
-  renderer.setSize( 1000, 800 );
+  scene = new THREE.Scene({background: '0xffffff'});
   espacio.appendChild( renderer.domElement );
   //scene.setValues( {background:''} );
   controls = new THREE.OrbitControls( camera, renderer.domElement );
@@ -58,7 +57,7 @@ function sim2(json){
         if(paso < particulas[i].pasos.length){
           pars[i].position.x = parseInt(particulas[i].pasos[paso].x);
           pars[i].position.y = parseInt(particulas[i].pasos[paso].y);
-          
+
         }else{
           console.log("particula " + i + " terminó");
           done++;

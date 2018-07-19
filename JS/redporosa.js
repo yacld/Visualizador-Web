@@ -11,9 +11,8 @@ function porosa(json){
 
   camera.position.set(350, 350, 700);
   camera.lookAt(0, 0, 0);
+  scene = new THREE.Scene({background: '0xffffff'});
 
-  renderer = new THREE.WebGLRenderer();
-  renderer.setSize( 1000, 800 );
   espacio.appendChild( renderer.domElement );
   //scene.setValues( {background:''} );
   controls = new THREE.OrbitControls( camera, renderer.domElement );

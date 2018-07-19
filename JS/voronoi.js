@@ -17,8 +17,7 @@ function voronoi3(puntos){
 
   camera.position.set(350, 350, 350);
 
-  renderer = new THREE.WebGLRenderer();
-  renderer.setSize( 1000, 800 );
+  scene = new THREE.Scene({background: '0xffffff'});
   espacio.appendChild( renderer.domElement );
   //scene.setValues( {background:''} );
   controls = new THREE.OrbitControls( camera, renderer.domElement );
@@ -74,7 +73,7 @@ function voronoi3(puntos){
   var animate = function () {
     controls.update();
     renderer.render(scene, camera);
-    requestAnimationFrame( animate() );
+    requestAnimationFrame( animate );
     //menu
   };
   animate();
