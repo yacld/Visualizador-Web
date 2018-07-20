@@ -13,7 +13,7 @@ function sim2(json){
   var aspect = 1000 / 800;
   camera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 );
 
-  camera.position.set(0, 0, 10);
+  camera.position.set(0, 0, 2);
 
   scene = new THREE.Scene({background: '0xffffff'});
   espacio.appendChild( renderer.domElement );
@@ -34,7 +34,7 @@ function sim2(json){
     var x = particula.pasos[0].x;
     var y = particula.pasos[0].y;
     //var z = particula.pasos[0].z;
-    var p = new THREE.SphereGeometry(.1, 10,10);
+    var p = new THREE.SphereGeometry(.01, 10,10);
     var material = new THREE.MeshBasicMaterial( {color: 0xff0000} );
     var sphere = new THREE.Mesh( p, material );
     sphere.position.x = parseInt(x);
@@ -55,8 +55,8 @@ function sim2(json){
     function avanza(){
       for(var i = 0; i < particulas.length; i++){
         if(paso < particulas[i].pasos.length){
-          pars[i].position.x = parseInt(particulas[i].pasos[paso].x);
-          pars[i].position.y = parseInt(particulas[i].pasos[paso].y);
+          pars[i].position.setX(parseFloat(particulas[i].pasos[paso].x));
+          pars[i].position.setY(parseFloat(particulas[i].pasos[paso].y));
 
         }else{
           console.log("particula " + i + " terminó");
