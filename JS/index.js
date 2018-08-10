@@ -21,6 +21,13 @@ renderer.setSize( 1000, 800 );
 
 document.getElementById('exampleInputFile').onchange = function(){
 
+
+  $('#MenuVoronoi').css({"visibility":"hidden", "height":"0px", "width":"0px"});
+  $('#voronoiMenu').css({"visibility":"hidden"});
+  $('#MenuRedPorosa').css({"visibility":"hidden", "height":"0px", "width":"0px"});
+  $('#porosMenu').css({"visibility":"hidden"});
+  $('#MenuParticulas').css({"visibility":"hidden", "height":"0px", "width": "0px"})
+  $('#particulasMenu').css({"visibility":"hidden"})
   $("#progress").css({"visibility":"visible","height":"40px"});
   $("#progressBar").css({"visibility":"visible","width":"100%"}).text("Cargando..."); /*Muestra la barra de progreso*/
   var file = this.files[0];
@@ -38,24 +45,20 @@ document.getElementById('exampleInputFile').onchange = function(){
       console.log(puntos);
       //worker1.postMessage(puntos);
       voronoi3(puntos);
-      $('.sidebar-heading').text("MenuVoronoi3D");
+
       $('#MenuVoronoi').css({"visibility":"visible", "height":"300px", "width": "auto"})
       $('#voronoiMenu').css({"visibility":"visible"})
 
     }else if(json.hasOwnProperty('particles')){
-      alert('particulas')
-      /*if(scene.children.length > 0){
-        while(scene.children.length > 0){
-          scene.remove(scene.children[0]);
-        }
-        console.log("ei");
-      }*/
+
       if(json.type == "2D"){
         sim2(json);
       }else{
         alert("3D");
       }
 
+      $('#MenuParticulas').css({"visibility":"visible", "height":"300px", "width": "auto"})
+      $('#particulasMenu').css({"visibility":"visible"})
 
     }else if(json.hasOwnProperty('sitios')){
       //alert('red porosa')

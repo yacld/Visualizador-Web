@@ -164,11 +164,7 @@ body {
 .custom-file-input ~ .custom-file-label::after {
     content: "Elegir";
 }
-.dropdown{
-  visibility: hidden;
-  height: 0px;
-  width: 8em;
-}
+
 
 /*
  * Footer
