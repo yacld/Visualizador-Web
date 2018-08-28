@@ -1,29 +1,22 @@
-function vonoroi ( ){
-    Visualizador.call(this);
+function Voronoi ( ){
+    MenuRed.call(this);
+
 }
-
-addEventListener('message', function(e){
-  voronoi3(e.data);
-});
-
+Voronoi.prototype = new MenuRed();
 
 var puntosred = [];
 var colors = {};
+var vor = new Voronoi();
 
 function voronoi3(puntos){
-  //if(renderer==null){
   var aspect = 1000 / 800;
   camera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 );
 
   camera.position.set(350, 350, 350);
 
-  scene = new THREE.Scene({background: '0xffffff'});
+  vsym.scene = new THREE.Scene();
   espacio.appendChild( renderer.domElement );
-  //scene.setValues( {background:''} );
   controls = new THREE.OrbitControls( camera, renderer.domElement );
-
-  controls.enableDamping = false;
-  //controls.dampingFactor = 0.25;
 
   controls.maxDistance =500;
   controls.maxDistance = 1000;
@@ -69,14 +62,8 @@ function voronoi3(puntos){
   centro.z = mz/2;
   controls.target =  centro;
 
-  //funcion que coloca la escena en el navegador
-  var animate = function () {
-    controls.update();
-    renderer.render(scene, camera);
-    requestAnimationFrame( animate );
-    //menu
-  };
-  animate();
+
+  vsym.animate();
 };
 
 function vGrises (r,g,b){

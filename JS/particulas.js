@@ -1,21 +1,48 @@
-function particulas ( ){
+function Particulas ( ){
     Visualizador.call(this);
 }
+Particulas.prototype =  new Visualizador();
+
+var paso = 1;
+//funcion que coloca la escena en el navegador
+Particulas.prototype.animate =function() {
+  controls.update();
+  var done = 0;
+  function avanza(){
+    for(var i = 0; i < particulas.length; i++){
+      if(paso < particulas[i].pasos.length){
+        pars[i].position.setX(parseFloat(particulas[i].pasos[paso].x));
+        pars[i].position.setY(parseFloat(particulas[i].pasos[paso].y));
+
+      }else{
+        console.log("particula " + i + " terminó");
+        done++;
+      }
+    }
+    renderer.render(scene, camera);
+    paso++;
+    requestAnimationFrame( avanza );
+  }
+//  avanza();
+  requestAnimationFrame( avanza );
 
 
-/*var puntosred = [];
-var colors = {};*/
+};
+
+
 var particulas = [];
 var pars = [];
+var part = new Particulas();
+
 
 function sim2(json){
   //if(renderer==null){
   var aspect = 1000 / 800;
   camera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 );
 
-  camera.position.set(0, 0, 2);
+  camera.position.set(0, 0, 1);
 
-  scene = new THREE.Scene({background: '0xffffff'});
+  vsym.scene = new THREE.Scene();
   espacio.appendChild( renderer.domElement );
   //scene.setValues( {background:''} );
   controls = new THREE.OrbitControls( camera, renderer.domElement );
@@ -47,33 +74,5 @@ function sim2(json){
   console.log(pars);
   console.log(particulas);
 
-  var paso = 1;
-  //funcion que coloca la escena en el navegador
-  var animate = function () {
-    controls.update();
-    var done = 0;
-    function avanza(){
-      for(var i = 0; i < particulas.length; i++){
-        if(paso < particulas[i].pasos.length){
-          pars[i].position.setX(parseFloat(particulas[i].pasos[paso].x));
-          pars[i].position.setY(parseFloat(particulas[i].pasos[paso].y));
-
-        }else{
-          console.log("particula " + i + " terminó");
-          done++;
-        }
-      }
-      renderer.render(scene, camera);
-      paso++;
-      requestAnimationFrame( avanza );
-    }
-    avanza();
-    //renderer.render(scene, camera);
-
-    requestAnimationFrame( avanza );
-
-
-    //menu
-  };
-  animate();
+  part.animate();
 };

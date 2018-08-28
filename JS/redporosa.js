@@ -1,6 +1,7 @@
-function redporosa ( ){
-    Visualizador.call(this);
+function RedPorosa ( ){
+    MenuRed.call(this);
 }
+RedPorosa.prototype = new MenuRed();
 
 var redporosa = [];
 var colorsp = {};
@@ -11,7 +12,7 @@ function porosa(json){
 
   camera.position.set(350, 350, 700);
   camera.lookAt(0, 0, 0);
-  scene = new THREE.Scene({background: '0xffffff'});
+  vsym.scene = new THREE.Scene();
 
   espacio.appendChild( renderer.domElement );
   //scene.setValues( {background:''} );
