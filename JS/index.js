@@ -1,19 +1,26 @@
 function Visualizador (){
-  var scene=0,group=0,camera=0,renderer=0,controls=0;
-  //funcion que coloca la escena en el navegador
+  this.scene=0;
+  this.group=0;
+  this.camera=0;
+  this.renderer=0;
+  this.controls=0;
+  this.bandera = true;
 }
+//funcion que coloca la escena en el navegador
 Visualizador.prototype.animate =function() {
-  controls.update();
-  renderer.render(scene, camera);
-  requestAnimationFrame( vsym.animate );
+  if(vsym.bandera != false){
+    vsym.controls.update();
+    vsym.renderer.render(vsym.scene, vsym.camera);
+    requestAnimationFrame( vsym.animate );
+  }
 };
 
 var vsym = new Visualizador();
 
-renderer = new THREE.WebGLRenderer();
-renderer.setSize( 1000, 800 );
+vsym.renderer = new THREE.WebGLRenderer();
+vsym.renderer.setSize( 1000, 800 );
 
-
+/* funcion para leer el archivo */
 document.getElementById('exampleInputFile').onchange = function(){
 
   $('#MenuVoronoi').css({"visibility":"hidden", "height":"0px", "width":"0px"});
@@ -33,7 +40,7 @@ document.getElementById('exampleInputFile').onchange = function(){
 
       var puntos = json.p;
       console.log(puntos);
-      voronoi3(puntos);
+      vor.voronoi3(puntos);
 
       $('#MenuVoronoi').css({"visibility":"visible", "height":"300px", "width": "auto"})
       $('#voronoiMenu').css({"visibility":"visible"})
@@ -51,7 +58,7 @@ document.getElementById('exampleInputFile').onchange = function(){
 
     }else if(json.hasOwnProperty('sitios')){
 
-      porosa(json);
+      rp.porosa(json);
 
       $('#MenuRedPorosa').css({"visibility":"visible", "height":"300px", "width": "auto"})
       $('#porosMenu').css({"visibility":"visible"})
@@ -68,3 +75,13 @@ document.getElementById('exampleInputFile').onchange = function(){
 
   reader.readAsText(file);
 };
+
+function autoRot(checkid){
+  var checkbox;
+  if(checkid == 1){
+    checkbox = document.getElementById("Check3");
+  }else if(checkid == 2){
+    checkbox = document.getElementById("Checkrp3");
+  }
+  vor.autoR(checkbox);
+}

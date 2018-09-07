@@ -6,7 +6,7 @@ Particulas.prototype =  new Visualizador();
 var paso = 1;
 //funcion que coloca la escena en el navegador
 Particulas.prototype.animate =function() {
-  controls.update();
+  vsym.controls.update();
   var done = 0;
   function avanza(){
     for(var i = 0; i < particulas.length; i++){
@@ -19,14 +19,12 @@ Particulas.prototype.animate =function() {
         done++;
       }
     }
-    renderer.render(scene, camera);
+    vsym.renderer.render(vsym.scene, vsym.camera);
     paso++;
     requestAnimationFrame( avanza );
   }
 //  avanza();
   requestAnimationFrame( avanza );
-
-
 };
 
 
@@ -38,22 +36,22 @@ var part = new Particulas();
 function sim2(json){
   //if(renderer==null){
   var aspect = 1000 / 800;
-  camera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 );
+  vsym.camera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 );
 
-  camera.position.set(0, 0, 1);
+  vsym.camera.position.set(0, 0, 1);
 
   vsym.scene = new THREE.Scene();
-  espacio.appendChild( renderer.domElement );
+  espacio.appendChild( vsym.renderer.domElement );
   //scene.setValues( {background:''} );
-  controls = new THREE.OrbitControls( camera, renderer.domElement );
+  vsym.controls = new THREE.OrbitControls( vsym.camera, vsym.renderer.domElement );
 
-  controls.enableDamping = false;
+  vsym.controls.enableDamping = false;
   //controls.dampingFactor = 0.25;
 
-  controls.maxDistance =500;
-  controls.maxDistance = 1000;
+  vsym.controls.maxDistance =500;
+  vsym.controls.maxDistance = 1000;
   var group = new THREE.Group();
-  scene.add(group);
+  vsym.scene.add(group);
 
   particulas = json.particles.particle;
   console.log(particulas.length);
@@ -67,7 +65,7 @@ function sim2(json){
     sphere.position.x = parseInt(x);
     sphere.position.y = parseInt(y);
     //sphere.position.z = parseInt(z);
-    scene.add( sphere );
+    vsym.scene.add( sphere );
     pars.push(sphere);
 
   });
