@@ -24,25 +24,25 @@ function RedPorosa ( ){
       var group = new THREE.Group();
       vsym.scene.add(group);
 
-      var colores = json.sitiosColor;
+      //var colores = json.sitiosColor;
       var puntos = json.sitios;
       var x,y,z,radio,rotacion,radiomax = -1;
 
-      for(var i = 0; i < colores.length; i++){
-        x=puntos[i*5+0];
-        y=puntos[i*5+1];
-        z=puntos[i*5+2];
-        radio=puntos[i*5+3];
+      for(var i = 0; i < puntos.length; i++){
+        x=puntos[i].x;
+        y=puntos[i].y;
+        z=puntos[i].z;
+        radio=puntos[i].r;
         if(radio>radiomax){
           radiomax=radio;
         }
         rotacion=puntos[i*5+4];
         var p = new THREE.SphereGeometry(radio, 10,10);
-        if(colores[i]==0){
+        if(puntos[i].color==0){
           var material = new THREE.MeshBasicMaterial( {color: 0xff0000} );
-        }else if(colores[i]==1){
+        }else if(puntos[i].color==1){
           var material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
-        }else if(colores[i]==2){
+        }else if(puntos[i].color==2){
           var material = new THREE.MeshBasicMaterial( {color: 0x0000ff} );
         }
         var sphere = new THREE.Mesh( p, material );
@@ -53,20 +53,20 @@ function RedPorosa ( ){
         objRedp.redporosa.push(sphere);
 
       }
-      var enlacescolores = json.enlacesColor;
+      //var enlacescolores = json.enlacesColor;
       var enlaces = json.enlaces;
-      for(var i = 0; i < enlacescolores.length; i++){
-        x=enlaces[i*5+0];
-        y=enlaces[i*5+1];
-        z=enlaces[i*5+2];
-        radio=enlaces[i*5+3];
-        rotacion=enlaces[i*5+4];
+      for(var i = 0; i < enlaces.length; i++){
+        x=enlaces[i].x;
+        y=enlaces[i].y;
+        z=enlaces[i].z;
+        radio=enlaces[i].r;
+        rotacion=enlaces[i].eje;
         var p = new THREE.CylinderGeometry(radio,radio,radiomax*3,10);
-        if(enlacescolores[i]==0){
+        if(enlaces[i].color==0){
           var material = new THREE.MeshBasicMaterial( {color: 0xff0000} );
-        }else if(enlacescolores[i]==1){
+        }else if(enlaces[i].color==1){
           var material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
-        }else if(enlacescolores[i]==2){
+        }else if(enlaces[i].color==2){
           var material = new THREE.MeshBasicMaterial( {color: 0x0000ff} );
         }
         var cylinder = new THREE.Mesh( p, material );
