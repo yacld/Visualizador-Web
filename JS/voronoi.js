@@ -4,11 +4,11 @@ function Voronoi ( ){
     this.colors = {};
 
 
-    this.vGrises = function(r,g,b) {
+    this.setGris = function(r,g,b) {
       var checkbox = document.getElementById("Check2");
       this.setColor(checkbox,r,g,b);
     }
-    this.vBlue  = function(r,g,b){
+    this.setBlue  = function(r,g,b){
       var checkbox = document.getElementById("Check1");
       this.setColor(checkbox,r,g,b);
     }
@@ -16,7 +16,7 @@ function Voronoi ( ){
     this.setColor = function(checkbox,r,g,b){
       var coloraux, coloraux2, caux;
       if(checkbox.checked==true){
-           vor.puntosred.forEach(function(punto){
+           objVoronoi.puntosred.forEach(function(punto){
              coloraux = punto.material.color;
              coloraux2 = coloraux.getHex();
              caux = coloraux.r+ coloraux.g +coloraux.b;
@@ -24,20 +24,20 @@ function Voronoi ( ){
              coloraux.g =g/caux;
              coloraux.b =b/caux;
              punto.material.setValues({color : coloraux});
-             vor.colors[coloraux.getHex()] = coloraux2;
+             objVoronoi.colors[coloraux.getHex()] = coloraux2;
            });
       } else {
-            vor.puntosred.forEach(function(punto){
+            objVoronoi.puntosred.forEach(function(punto){
               coloraux = punto.material.color;
-              caux =vor.colors[coloraux.getHex()];
+              caux =objVoronoi.colors[coloraux.getHex()];
               punto.material.setValues({color : caux});
             });
-            vor.colors = {};
+            objVoronoi.colors = {};
       }
-      console.log(vor.colors);
+      console.log(objVoronoi.colors);
     }
 
-    this.voronoi3 = function(puntos){
+    this.drawVoronoi = function(puntos){
       var aspect = 1000 / 800;
       vsym.camera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 );
 
@@ -81,9 +81,9 @@ function Voronoi ( ){
         var c = new THREE.PointsMaterial( {color: aux}  );
         var puntomesh =  new THREE.Points( colores[''+color], c);
         group.add(puntomesh);
-        vor.puntosred.push(puntomesh);
+        objVoronoi.puntosred.push(puntomesh);
       });
-      console.log(vor.puntosred);
+      console.log(objVoronoi.puntosred);
       console.log(vsym.controls);
       var centro = new THREE.Vector3();
       centro.x = mx/2;
@@ -97,4 +97,4 @@ function Voronoi ( ){
 }
 Voronoi.prototype = new MenuRed();
 
-var vor = new Voronoi();
+var objVoronoi = new Voronoi();

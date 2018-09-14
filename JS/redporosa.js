@@ -3,7 +3,7 @@ function RedPorosa ( ){
     this.redporosa = [];
     this.colorsp = {};
 
-    this.porosa = function(json) {
+    this.drawRed = function(json) {
       var aspect = 1000 / 800;
       vsym.camera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 );
 
@@ -50,7 +50,7 @@ function RedPorosa ( ){
         sphere.position.y = parseInt(y);
         sphere.position.z = parseInt(z);
         vsym.scene.add( sphere );
-        rp.redporosa.push(sphere);
+        objRedp.redporosa.push(sphere);
 
       }
       var enlacescolores = json.enlacesColor;
@@ -87,7 +87,7 @@ function RedPorosa ( ){
           cylinder.rotation.z=1;
         }
         vsym.scene.add( cylinder );
-        rp.redporosa.push(cylinder);
+        objRedp.redporosa.push(cylinder);
 
       }
       console.log(vsym.scene);
@@ -95,11 +95,11 @@ function RedPorosa ( ){
       vsym.animate();
     }
 
-    this.rGrises = function(r,g,b){
+    this.setGris = function(r,g,b){
       var checkbox = document.getElementById("Checkrp2");
       var coloraux, caux;
       if(checkbox.checked==true){
-           rp.redporosa.forEach(function(punto){
+           objRedp.redporosa.forEach(function(punto){
              var aux = punto.material.color;
              coloraux  =punto.material.color;
              if(aux.r==1 && aux.g==0 && aux.b==0){
@@ -110,10 +110,10 @@ function RedPorosa ( ){
                aux.r = b; aux.g = b; aux.b = b;
              }
              punto.material.setValues({color : aux});
-             rp.colorsp[aux.getHex()] = coloraux;
+             objRedp.colorsp[aux.getHex()] = coloraux;
            });
       } else {
-            rp.redporosa.forEach(function(punto){
+            objRedp.redporosa.forEach(function(punto){
               var aux = punto.material.color;
               coloraux  =punto.material.color;
               if(aux.r == r && aux.g == r && aux.b == r){
@@ -126,11 +126,11 @@ function RedPorosa ( ){
               punto.material.setValues({color : aux});
 
             });
-            rp.colorsp = {};
+            objRedp.colorsp = {};
       }
     }
 
-    this.rAzul =function(r,g,b) {
+    this.setBlue =function(r,g,b) {
       var checkbox = document.getElementById("Checkrp1");
 
       this.setColor(checkbox,r,g,b);
@@ -139,7 +139,7 @@ function RedPorosa ( ){
     this.setColor = function(checkbox,r,g,b) {
       var coloraux, coloraux2, caux;
       if(checkbox.checked==true){
-           rp.redporosa.forEach(function(punto){
+           objRedp.redporosa.forEach(function(punto){
              coloraux = punto.material.color;
              if(coloraux.r!=0){coloraux.r =0, coloraux.b=r;}
              else if(coloraux.g!=0){coloraux.g =0,coloraux.b=g;}
@@ -147,7 +147,7 @@ function RedPorosa ( ){
              punto.material.setValues({color : coloraux});
            });
       } else {
-            rp.redporosa.forEach(function(punto){
+            objRedp.redporosa.forEach(function(punto){
               coloraux = punto.material.color;
               coloraux2 = punto.material.color;
               if(coloraux.b==r){coloraux.r =1, coloraux.b=0;}
@@ -156,11 +156,11 @@ function RedPorosa ( ){
               punto.material.setValues({color : coloraux});
 
             });
-            rp.colorsp = {};
+            objRedp.colorsp = {};
       }
     }
 
 }
 RedPorosa.prototype = new MenuRed();
 
-var rp = new RedPorosa();
+var objRedp = new RedPorosa();

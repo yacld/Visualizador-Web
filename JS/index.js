@@ -4,7 +4,8 @@ function Visualizador (){
   this.camera=0;
   this.renderer=0;
   this.controls=0;
-  this.bandera = true;
+  this.bandera = false;
+  this.json = 0;
 }
 //funcion que coloca la escena en el navegador
 Visualizador.prototype.animate =function() {
@@ -22,7 +23,7 @@ vsym.renderer.setSize( 1000, 800 );
 
 /* funcion para leer el archivo */
 document.getElementById('exampleInputFile').onchange = function(){
-
+  vsym.bandera = false;
   $('#MenuVoronoi').css({"visibility":"hidden", "height":"0px", "width":"0px"});
   $('#voronoiMenu').css({"visibility":"hidden"});
   $('#MenuRedPorosa').css({"visibility":"hidden", "height":"0px", "width":"0px"});
@@ -34,21 +35,20 @@ document.getElementById('exampleInputFile').onchange = function(){
   var file = this.files[0];
   var reader = new FileReader();
   reader.onload = function(progressEvent){
-    var json = JSON.parse(this.result);
-    console.log(json);
-    if(json.hasOwnProperty('p')){
-
-      var puntos = json.p;
+    vsym.json = JSON.parse(this.result);
+    console.log(vsym.json);
+    vsym.bandera = true;
+    if(vsym.json.hasOwnProperty('p')){
+      var puntos = vsym.json.p;
       console.log(puntos);
-      vor.voronoi3(puntos);
+      objVoronoi.drawVoronoi(puntos);
 
       $('#MenuVoronoi').css({"visibility":"visible", "height":"300px", "width": "auto"})
       $('#voronoiMenu').css({"visibility":"visible"})
 
-    }else if(json.hasOwnProperty('particles')){
-
-      if(json.type == "2D"){
-        sim2(json);
+    }else if(vsym.json.hasOwnProperty('particles')){
+      if(vsym.json.type == "2D"){
+        objParticulas.animaParticulas(vsym.json);
       }else{
         alert("3D");
       }
@@ -56,9 +56,8 @@ document.getElementById('exampleInputFile').onchange = function(){
       $('#MenuParticulas').css({"visibility":"visible", "height":"300px", "width": "auto"})
       $('#particulasMenu').css({"visibility":"visible"})
 
-    }else if(json.hasOwnProperty('sitios')){
-
-      rp.porosa(json);
+    }else if(vsym.json.hasOwnProperty('sitios')){
+      objRedp.drawRed(vsym.json);
 
       $('#MenuRedPorosa').css({"visibility":"visible", "height":"300px", "width": "auto"})
       $('#porosMenu').css({"visibility":"visible"})
@@ -75,13 +74,3 @@ document.getElementById('exampleInputFile').onchange = function(){
 
   reader.readAsText(file);
 };
-
-function autoRot(checkid){
-  var checkbox;
-  if(checkid == 1){
-    checkbox = document.getElementById("Check3");
-  }else if(checkid == 2){
-    checkbox = document.getElementById("Checkrp3");
-  }
-  vor.autoR(checkbox);
-}
