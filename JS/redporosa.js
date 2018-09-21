@@ -54,7 +54,7 @@ function RedPorosa ( ){
 
       }
       //var enlacescolores = json.enlacesColor;
-      var enlaces = json.enlaces;
+    /*  var enlaces = json.enlaces;
       for(var i = 0; i < enlaces.length; i++){
         x=enlaces[i].x;
         y=enlaces[i].y;
@@ -89,7 +89,7 @@ function RedPorosa ( ){
         vsym.scene.add( cylinder );
         objRedp.redporosa.push(cylinder);
 
-      }
+      }*/
       console.log(vsym.scene);
 
       vsym.animate();

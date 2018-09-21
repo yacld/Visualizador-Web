@@ -29,5 +29,5 @@ function autoRot(checkid){
   }else if(checkid == 2){
     checkbox = document.getElementById("Checkrp3");
   }
-  vor.autoRotar(checkbox);
+  objVoronoi.autoRotar(checkbox);
 }
