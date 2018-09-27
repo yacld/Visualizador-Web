@@ -84,8 +84,8 @@ var parsea = function( iniX, finX, iniY, finY, iniZ, finZ, io ){
 
             var arrayRadios = [];
             var arrayColores = [];
-    	    finY = L;
-    	    finZ = L;
+    	    //finY = L;
+    	    //finZ = L;
 
             for ( var i = 0; i < L*L*L*4*4 ; i = i + 16 ) {
                 arrayRadios.push([redondea( data.readFloatLE( i ) ),
@@ -193,7 +193,7 @@ var parsea = function( iniX, finX, iniY, finY, iniZ, finZ, io ){
             atZ = (maxZ + minZ)/2.0;
 
             objson["sitios"] = sitios;
-            //objson["enlaces"] = enlaces;
+            objson["enlaces"] = enlaces;
 
             objson["atX"] = atX;
             objson["atY"] = atY;
@@ -209,7 +209,7 @@ var parsea = function( iniX, finX, iniY, finY, iniZ, finZ, io ){
             console.log("contador = " + cuenta);
             var result = L*L*L;
             console.log('Esperado' + L + 'X' + L + 'X' + L + '=' + result);
-            console.log('Obtenido' + L + 'X' + L + 'X' + L + '=' + sitios.length/9);
+            console.log('Obtenido' + finX + 'X' + finY + 'X' + finZ + '=' + sitios.length);
 
 
             fs.writeFile( nameDefault, string, function(err) {
@@ -230,4 +230,4 @@ var parsea = function( iniX, finX, iniY, finY, iniZ, finZ, io ){
     });
 };
 
-parsea(1,9,1,1,1,1);
+parsea(1,48,1,48,1,48);

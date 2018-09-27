@@ -27,11 +27,19 @@ function RedPorosa ( ){
       //var colores = json.sitiosColor;
       var puntos = json.sitios;
       var x,y,z,radio,rotacion,radiomax = -1;
+      var mx=-1000,my=-1000,mz=-1000;
+      var minx=1000,miny=1000,minz=1000;
 
       for(var i = 0; i < puntos.length; i++){
         x=puntos[i].x;
         y=puntos[i].y;
         z=puntos[i].z;
+        if(x>mx) mx=x;
+        if(x<minx) minx=x;
+        if(y>my) my=y;
+        if(y<miny) miny=y;
+        if(z>mz) mz=z;
+        if(z<minz) minz=z;
         radio=puntos[i].r;
         if(radio>radiomax){
           radiomax=radio;
@@ -49,48 +57,57 @@ function RedPorosa ( ){
         sphere.position.x = parseInt(x);
         sphere.position.y = parseInt(y);
         sphere.position.z = parseInt(z);
+
         vsym.scene.add( sphere );
         objRedp.redporosa.push(sphere);
 
       }
       //var enlacescolores = json.enlacesColor;
-    /*  var enlaces = json.enlaces;
-      for(var i = 0; i < enlaces.length; i++){
-        x=enlaces[i].x;
-        y=enlaces[i].y;
-        z=enlaces[i].z;
-        radio=enlaces[i].r;
-        rotacion=enlaces[i].eje;
-        var p = new THREE.CylinderGeometry(radio,radio,radiomax*3,10);
-        if(enlaces[i].color==0){
-          var material = new THREE.MeshBasicMaterial( {color: 0xff0000} );
-        }else if(enlaces[i].color==1){
-          var material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
-        }else if(enlaces[i].color==2){
-          var material = new THREE.MeshBasicMaterial( {color: 0x0000ff} );
-        }
-        var cylinder = new THREE.Mesh( p, material );
-        cylinder.position.x = parseInt(x);
-        cylinder.position.y = parseInt(y);
-        cylinder.position.z = parseInt(z);
-        if(rotacion==0){
-          cylinder.rotation.x=1;
-          cylinder.rotation.y=0;
-          cylinder.rotation.z=0;
-        }else if(rotacion==1){
-          cylinder.rotation.x=0;
-          cylinder.rotation.y=1;
-          cylinder.rotation.z=0;
-        }else if(rotacion==2){
-          cylinder.rotation.x=0;
-          cylinder.rotation.y=0;
-          cylinder.rotation.z=1;
-        }
-        vsym.scene.add( cylinder );
-        objRedp.redporosa.push(cylinder);
+      if(json.hasOwnProperty('enlaces')){
+        var enlaces = json.enlaces;
+        for(var i = 0; i < enlaces.length; i++){
+          x=enlaces[i].x;
+          y=enlaces[i].y;
+          z=enlaces[i].z;
+          radio=enlaces[i].r;
+          rotacion=enlaces[i].eje;
+          var p = new THREE.CylinderGeometry(radio,radio,radiomax*3,10);
+          if(enlaces[i].color==0){
+            var material = new THREE.MeshBasicMaterial( {color: 0xff0000} );
+          }else if(enlaces[i].color==1){
+            var material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+          }else if(enlaces[i].color==2){
+            var material = new THREE.MeshBasicMaterial( {color: 0x0000ff} );
+          }
+          var cylinder = new THREE.Mesh( p, material );
+          cylinder.position.x = parseInt(x);
+          cylinder.position.y = parseInt(y);
+          cylinder.position.z = parseInt(z);
+          if(rotacion==0){
+            cylinder.rotation.x=Math.PI/2;
+            cylinder.rotation.y=0;
+            cylinder.rotation.z=0;
+          }else if(rotacion==1){
+            cylinder.rotation.x=0;
+            cylinder.rotation.y=Math.PI/2;
+            cylinder.rotation.z=0;
+          }else if(rotacion==2){
+            cylinder.rotation.x=0;
+            cylinder.rotation.y=0;
+            cylinder.rotation.z=Math.PI/2;
+          }
+          vsym.scene.add( cylinder );
+          objRedp.redporosa.push(cylinder);
 
-      }*/
+        }
+      }
+
       console.log(vsym.scene);
+      var centro = new THREE.Vector3();
+      centro.x = (mx+minx)/2;
+      centro.y = (my+miny)/2;
+      centro.z = (mz+minz)/2;
+      vsym.controls.target =  centro;
 
       vsym.animate();
     }
