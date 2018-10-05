@@ -5,9 +5,11 @@ function Particulas ( ){
     this.particulas = [];
     this.pars = [];
     this.velocidad = 1;
+    this.play = false;
 
     this.animaParticulas  = function(json) {
       objParticulas.paso = 1;
+      objParticulas.play = true;
       var aspect = 1000 / 800;
       vsym.camera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 );
 
@@ -16,18 +18,12 @@ function Particulas ( ){
       vsym.scene = new THREE.Scene();
       espacio.appendChild( vsym.renderer.domElement );
       //scene.setValues( {background:''} );
-      vsym.controls = new THREE.OrbitControls( vsym.camera, vsym.renderer.domElement );
 
-      vsym.controls.enableDamping = false;
-      //controls.dampingFactor = 0.25;
-
-      vsym.controls.maxDistance =500;
-      vsym.controls.maxDistance = 1000;
       var group = new THREE.Group();
       vsym.scene.add(group);
 
       objParticulas.particulas = json.particles.particle;
-      console.log(part.particulas.length);
+      console.log(objParticulas.particulas.length);
       objParticulas.particulas.forEach(function(particula){
         var x = particula.pasos[0].x;
         var y = particula.pasos[0].y;
@@ -46,30 +42,53 @@ function Particulas ( ){
       console.log(objParticulas.particulas);
 
       objParticulas.animate();
-    };
-}
-Particulas.prototype =  new Visualizador();
+    }
 
-//funcion que coloca la escena en el navegador
-Particulas.prototype.animate =function() {
-  vsym.controls.update();
-  var done = 0;
-  function avanza(){
-    if(vsym.bandera != false){
+    this.pause = function() {
+      if(objParticulas.play == true){
+        objParticulas.play = false;
+      }else{
+        objParticulas.play  = true;
+      }
+    }
+
+    this.regresa = function() {
+      objParticulas.play = false;
+      objParticulas.paso -= 5;
+      objParticulas.setPos();
+      vsym.renderer.render(vsym.scene, vsym.camera);
+    }
+
+    this.avanzar = function() {
+      objParticulas.play = false;
+      objParticulas.paso += 5;
+      objParticulas.setPos();
+      vsym.renderer.render(vsym.scene, vsym.camera);
+    }
+
+    this.setPos = function() {
       for(var i = 0; i < objParticulas.particulas.length; i++){
         if(objParticulas.paso < objParticulas.particulas[i].pasos.length){
           objParticulas.pars[i].position.setX(parseFloat(objParticulas.particulas[i].pasos[objParticulas.paso].x));
           objParticulas.pars[i].position.setY(parseFloat(objParticulas.particulas[i].pasos[objParticulas.paso].y));
-
-        }else{
-          console.log("particula " + i + " terminó");
-          done++;
         }
       }
-      vsym.renderer.render(vsym.scene, vsym.camera);
-      objParticulas.paso++;
-      requestAnimationFrame( avanza );
     }
+}
+
+Particulas.prototype =  new Visualizador();
+
+//funcion que coloca la escena en el navegador
+Particulas.prototype.animate =function() {
+  function avanza(){
+    if(vsym.bandera != false){
+      if(objParticulas.play != false){
+        objParticulas.setPos();
+      }
+      objParticulas.paso++;
+    }
+    vsym.renderer.render(vsym.scene, vsym.camera);
+    requestAnimationFrame( avanza );
   }
   requestAnimationFrame( avanza );
 };
