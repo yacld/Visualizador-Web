@@ -28,6 +28,7 @@ function Particulas ( ){
       var h = xRange / 1000;
       var x = 0;
       var material = new THREE.LineBasicMaterial( { color: 0x0000ff } );
+      var mat2 = new THREE.LineBasicMaterial( { color: 0xff0000 } );
 
       //TWALL
       var funciont = objParticulas.funciones.TWall.function;
@@ -39,7 +40,11 @@ function Particulas ( ){
         tgeometry.vertices.push(new THREE.Vector3( x, y, 0) );
         x += h;
       }
-      var funt = new THREE.Line( tgeometry, material );
+      if(objParticulas.funciones.TWall.isReflec){
+        var funt = new THREE.Line( tgeometry, material );
+      }else{
+        var funt = new THREE.Line( tgeometry, mat2 );
+      }
       vsym.scene.add(funt);
 
       //BWALL
@@ -52,7 +57,11 @@ function Particulas ( ){
         bgeometry.vertices.push(new THREE.Vector3( x, y, 0) );
         x += h;
       }
-      var funb = new THREE.Line( bgeometry, material );
+      if(objParticulas.funciones.BWall.isReflec){
+        var funb = new THREE.Line( bgeometry, material );
+      }else{
+        var funb = new THREE.Line( bgeometry, mat2 );
+      }
       vsym.scene.add(funb);
       var y;
 
@@ -62,7 +71,11 @@ function Particulas ( ){
       lgeometry.vertices.push(new THREE.Vector3( barizq, y, 0) );
       y = bWall(barizq);
       lgeometry.vertices.push(new THREE.Vector3( barizq, y, 0) );
-      var barl = new THREE.Line( lgeometry, material );
+      if(objParticulas.funciones.LBarrier.isReflec){
+        var barl = new THREE.Line( lgeometry, material );
+      }else{
+        var barl = new THREE.Line( lgeometry, mat2 );
+      }
       vsym.scene.add(barl);
 
       //RBarrier
@@ -71,7 +84,11 @@ function Particulas ( ){
       rgeometry.vertices.push(new THREE.Vector3( barder, y, 0) );
       y = bWall(barder);
       rgeometry.vertices.push(new THREE.Vector3( barder, y, 0) );
-      var barr = new THREE.Line(rgeometry, material );
+      if(objParticulas.funciones.RBarrier.isReflec){
+        var barr = new THREE.Line( rgeometry, material );
+      }else{
+        var barr = new THREE.Line( rgeometry, mat2 );
+      }
       vsym.scene.add(barr);
 
 
