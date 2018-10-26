@@ -3,6 +3,7 @@ function Particulas ( ){
 
     this.paso = 1;
     this.particulas = [];
+    this.functions = [];
     this.pars = [];
     this.velocidad = 1;
     this.play = false;
@@ -17,13 +18,64 @@ function Particulas ( ){
 
       vsym.scene = new THREE.Scene();
       espacio.appendChild( vsym.renderer.domElement );
-      //scene.setValues( {background:''} );
 
-      var group = new THREE.Group();
-      vsym.scene.add(group);
+      objParticulas.funciones = json.canal;
+
+      var barizq = objParticulas.funciones.LBarrier.value;
+      var barder = objParticulas.funciones.RBarrier.value;
+
+      var xRange = barder - barizq;
+      var h = xRange / 1000;
+      var x = 0;
+      var material = new THREE.LineBasicMaterial( { color: 0x0000ff } );
+
+      //TWALL
+      var funciont = objParticulas.funciones.TWall.function;
+      var tWall = texttoFunction(funciont);
+      var tgeometry = new THREE.Geometry();
+
+      for(var i = 0; i<1000; i++){
+        var y = tWall(x);
+        tgeometry.vertices.push(new THREE.Vector3( x, y, 0) );
+        x += h;
+      }
+      var funt = new THREE.Line( tgeometry, material );
+      vsym.scene.add(funt);
+
+      //BWALL
+      var funcionb = objParticulas.funciones.BWall.function;
+      var bWall = texttoFunction(funcionb);
+      var bgeometry = new THREE.Geometry();
+      x = 0;
+      for(var i = 0; i<1000; i++){
+        var y = bWall(x);
+        bgeometry.vertices.push(new THREE.Vector3( x, y, 0) );
+        x += h;
+      }
+      var funb = new THREE.Line( bgeometry, material );
+      vsym.scene.add(funb);
+      var y;
+
+      //LBarrier
+      y = tWall(barizq);
+      var lgeometry = new THREE.Geometry();
+      lgeometry.vertices.push(new THREE.Vector3( barizq, y, 0) );
+      y = bWall(barizq);
+      lgeometry.vertices.push(new THREE.Vector3( barizq, y, 0) );
+      var barl = new THREE.Line( lgeometry, material );
+      vsym.scene.add(barl);
+
+      //RBarrier
+      y = tWall(barder);
+      var rgeometry = new THREE.Geometry();
+      rgeometry.vertices.push(new THREE.Vector3( barder, y, 0) );
+      y = bWall(barder);
+      rgeometry.vertices.push(new THREE.Vector3( barder, y, 0) );
+      var barr = new THREE.Line(rgeometry, material );
+      vsym.scene.add(barr);
+
 
       objParticulas.particulas = json.particles.particle;
-      console.log(objParticulas.particulas.length);
       objParticulas.particulas.forEach(function(particula){
         var x = particula.pasos[0].x;
         var y = particula.pasos[0].y;
@@ -38,8 +90,7 @@ function Particulas ( ){
         objParticulas.pars.push(sphere);
 
       });
-      console.log(objParticulas.pars);
-      console.log(objParticulas.particulas);
+      console.log(vsym.scene);
 
       objParticulas.animate();
     }
@@ -94,3 +145,7 @@ Particulas.prototype.animate =function() {
 };
 
 var objParticulas = new Particulas();
+
+function texttoFunction(funcion){
+  return Parser.parse(funcion).toJSFunction( ['x'] );
+}

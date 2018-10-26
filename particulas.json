@@ -2,11 +2,11 @@
   "type": "2D",
   "canal": {
     "TWall": {
-      "function": "0.8x+0.1",
+      "function": "0.8*x+0.1",
       "isReflec": true
     },
     "BWall": {
-      "function": "-0.8x-0.1",
+      "function": "-0.8*x-0.1",
       "isReflec": true
     },
     "LBarrier": {
