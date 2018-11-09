@@ -48,7 +48,7 @@ document.getElementById('exampleInputFile').onchange = function(){
 
     }else if(vsym.json.hasOwnProperty('particles')){
       if(vsym.json.type == "2D"){
-        objParticulas.animaParticulas(vsym.json);
+        objParticulas.creaEscena(vsym.json);
       }else{
         alert("3D");
       }

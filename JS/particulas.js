@@ -2,13 +2,16 @@ function Particulas ( ){
     Visualizador.call(this);
 
     this.paso = 1;
-    this.particulas = [];
-    this.functions = [];
+    this.particulas = 0;
+    this.funciones = 0 ;
     this.pars = [];
-    this.velocidad = 1;
+    this.color = [];
+    this.trays = [];
+    this.trayso = [];
+    //this.velocidad = 1;
     this.play = false;
 
-    this.animaParticulas  = function(json) {
+    this.creaEscena  = function(json) {
       objParticulas.paso = 1;
       objParticulas.play = true;
       var aspect = 1000 / 800;
@@ -18,6 +21,12 @@ function Particulas ( ){
 
       vsym.scene = new THREE.Scene();
       espacio.appendChild( vsym.renderer.domElement );
+
+      /**vsym.controls = new THREE.OrbitControls( vsym.camera, vsym.renderer.domElement );
+
+      vsym.controls.maxDistance =1;
+      vsym.controls.maxDistance = .5;
+      vsym.controls.enableZoom = true;**/
 
       objParticulas.funciones = json.canal;
 
@@ -91,14 +100,17 @@ function Particulas ( ){
       }
       vsym.scene.add(barr);
 
-
+      //dibuja particulas
       objParticulas.particulas = json.particles.particle;
+      var color = 1;
       objParticulas.particulas.forEach(function(particula){
         var x = particula.pasos[0].x;
         var y = particula.pasos[0].y;
         //var z = particula.pasos[0].z;
-        var p = new THREE.SphereGeometry(.01, 10,10);
-        var material = new THREE.MeshBasicMaterial( {color: 0xff0000} );
+        var p = new THREE.SphereGeometry(.005, 10,10); //(radio, ..., ...)
+        var aux =  color*111111;
+        objParticulas.color.push(aux);
+        var material = new THREE.MeshBasicMaterial( {color: aux} );
         var sphere = new THREE.Mesh( p, material );
         sphere.position.x = parseInt(x);
         sphere.position.y = parseInt(y);
@@ -106,9 +118,12 @@ function Particulas ( ){
         vsym.scene.add( sphere );
         objParticulas.pars.push(sphere);
 
+        objParticulas.trays.push( [{ "x": x, "y": y }] );
+
+        color += 100;
       });
       console.log(vsym.scene);
-
+      console.log(objParticulas.trayso);
       objParticulas.animate();
     }
 
@@ -137,10 +152,44 @@ function Particulas ( ){
     this.setPos = function() {
       for(var i = 0; i < objParticulas.particulas.length; i++){
         if(objParticulas.paso < objParticulas.particulas[i].pasos.length){
-          objParticulas.pars[i].position.setX(parseFloat(objParticulas.particulas[i].pasos[objParticulas.paso].x));
-          objParticulas.pars[i].position.setY(parseFloat(objParticulas.particulas[i].pasos[objParticulas.paso].y));
+          var x = parseFloat(objParticulas.particulas[i].pasos[objParticulas.paso].x);
+          var y = parseFloat(objParticulas.particulas[i].pasos[objParticulas.paso].y);
+          objParticulas.pars[i].position.setX(x);
+          objParticulas.pars[i].position.setY(y);
+          objParticulas.trays[i].push( { "x": x, "y": y } );
+        }else if(objParticulas.paso == objParticulas.particulas[i].pasos.length){
+          console.log("particula: " + i);
         }
       }
+    }
+
+    this.muestraTray  = function() {
+      checkbox = document.getElementById("Checkpt1");
+      if(checkbox.checked==false){
+        objParticulas.trayso.forEach( function(tray) {
+          vsym.scene.remove(tray);
+        });
+        objParticulas.trayso = [];
+        objParticulas.pause();
+      }else{
+        for(var i = 0; i < objParticulas.trays.length; i++) {
+          var color = objParticulas.color[i];
+          var geometry = new THREE.Geometry();
+          var material = new THREE.LineBasicMaterial( { color: color } );
+          for(var j = 0; j < objParticulas.trays[i].length; j++ ) {
+            var x = objParticulas.trays[i][j].x;
+            var y = objParticulas.trays[i][j].y;
+            geometry.vertices.push(new THREE.Vector3( x, y, 0) );
+
+          }
+          var tray = new THREE.Line( geometry, material );
+          vsym.scene.add(tray);
+          objParticulas.trayso.push(tray);
+
+        }
+        objParticulas.pause();
+      }
+
     }
 }
 
@@ -154,6 +203,7 @@ Particulas.prototype.animate =function() {
         objParticulas.setPos();
       }
       objParticulas.paso++;
+
     }
     vsym.renderer.render(vsym.scene, vsym.camera);
     requestAnimationFrame( avanza );
