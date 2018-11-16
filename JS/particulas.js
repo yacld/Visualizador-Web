@@ -165,6 +165,7 @@ function Particulas ( ){
       if(checkbox.checked==true){
         objParticulas.muestraTray();
       }
+      document.getElementById("paso").innerHTML = objParticulas.paso;
     }
 
     this.muestraTray  = function() {
