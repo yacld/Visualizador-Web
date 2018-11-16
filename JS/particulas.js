@@ -161,17 +161,20 @@ function Particulas ( ){
           console.log("particula: " + i);
         }
       }
+      checkbox = document.getElementById("Checkpt1");
+      if(checkbox.checked==true){
+        objParticulas.muestraTray();
+      }
     }
 
     this.muestraTray  = function() {
       checkbox = document.getElementById("Checkpt1");
-      if(checkbox.checked==false){
-        objParticulas.trayso.forEach( function(tray) {
-          vsym.scene.remove(tray);
-        });
-        objParticulas.trayso = [];
-        objParticulas.pause();
-      }else{
+      objParticulas.trayso.forEach( function(tray) {
+        vsym.scene.remove(tray);
+      });
+      objParticulas.trayso = [];
+      //objParticulas.pause();
+      if(checkbox.checked==true){
         for(var i = 0; i < objParticulas.trays.length; i++) {
           var color = objParticulas.color[i];
           var geometry = new THREE.Geometry();
@@ -187,7 +190,7 @@ function Particulas ( ){
           objParticulas.trayso.push(tray);
 
         }
-        objParticulas.pause();
+        //objParticulas.pause();
       }
 
     }
