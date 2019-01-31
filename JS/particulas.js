@@ -36,8 +36,8 @@ function Particulas ( ){
       var xRange = barder - barizq;
       var h = xRange / 1000;
       var x = 0;
-      var material = new THREE.LineBasicMaterial( { color: 0x0000ff } );
-      var mat2 = new THREE.LineBasicMaterial( { color: 0xff0000 } );
+      var material = new THREE.LineBasicMaterial( { color: 0x0000ff, linewidth: 10 } );
+      var mat2 = new THREE.LineBasicMaterial( { color: 0xff0000, linewidth: 10} );
 
       //TWALL
       var funciont = objParticulas.funciones.TWall.function;
@@ -106,15 +106,13 @@ function Particulas ( ){
       objParticulas.particulas.forEach(function(particula){
         var x = particula.pasos[0].x;
         var y = particula.pasos[0].y;
-        //var z = particula.pasos[0].z;
-        var p = new THREE.SphereGeometry(.005, 10,10); //(radio, ..., ...)
+        var p = new THREE.SphereGeometry(.01, 10,10); //(radio, ..., ...)
         var aux =  color*111111;
         objParticulas.color.push(aux);
         var material = new THREE.MeshBasicMaterial( {color: aux} );
         var sphere = new THREE.Mesh( p, material );
         sphere.position.x = parseInt(x);
         sphere.position.y = parseInt(y);
-        //sphere.position.z = parseInt(z);
         vsym.scene.add( sphere );
         objParticulas.pars.push(sphere);
 
@@ -149,6 +147,7 @@ function Particulas ( ){
       vsym.renderer.render(vsym.scene, vsym.camera);
     }
 
+
     this.setPos = function() {
       for(var i = 0; i < objParticulas.particulas.length; i++){
         if(objParticulas.paso < objParticulas.particulas[i].pasos.length){
@@ -168,13 +167,13 @@ function Particulas ( ){
       document.getElementById("paso").innerHTML = objParticulas.paso;
     }
 
+    // muestra trayectorias
     this.muestraTray  = function() {
       checkbox = document.getElementById("Checkpt1");
       objParticulas.trayso.forEach( function(tray) {
         vsym.scene.remove(tray);
       });
       objParticulas.trayso = [];
-      //objParticulas.pause();
       if(checkbox.checked==true){
         for(var i = 0; i < objParticulas.trays.length; i++) {
           var color = objParticulas.color[i];
@@ -191,7 +190,6 @@ function Particulas ( ){
           objParticulas.trayso.push(tray);
 
         }
-        //objParticulas.pause();
       }
 
     }
@@ -217,6 +215,7 @@ Particulas.prototype.animate =function() {
 
 var objParticulas = new Particulas();
 
+//convierte una funcion de texto a js
 function texttoFunction(funcion){
   return Parser.parse(funcion).toJSFunction( ['x'] );
 }
