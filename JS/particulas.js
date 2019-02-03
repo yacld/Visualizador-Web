@@ -4,13 +4,13 @@ function Particulas ( ){
     this.paso = 1;
     this.particulas = 0;
     this.funciones = 0 ;
-    this.pars = [];
-    this.color = [];
-    this.trays = [];
-    this.trayso = [];
-    //this.velocidad = 1;
+    this.pars = [];//particulas (objetos)
+    this.color = [];//colores
+    this.trays = [];//posiciones
+    this.trayso = [];//lineas
     this.play = false;
 
+    //inicia escena, particulas, dibuja canal y los agrega a escena
     this.creaEscena  = function(json) {
       objParticulas.paso = 1;
       objParticulas.play = true;
@@ -34,14 +34,14 @@ function Particulas ( ){
       var barder = objParticulas.funciones.RBarrier.value;
 
       var xRange = barder - barizq;
-      var h = xRange / 1000;
+      var h = xRange / 1000; //si se requiere mas detalle en las funciones hacer mas pequeño este valor
       var x = 0;
-      var material = new THREE.LineBasicMaterial( { color: 0x0000ff, linewidth: 10 } );
-      var mat2 = new THREE.LineBasicMaterial( { color: 0xff0000, linewidth: 10} );
+      var material = new THREE.LineBasicMaterial( { color: 0x0000ff, linewidth: 10 } );//rojo
+      var mat2 = new THREE.LineBasicMaterial( { color: 0xff0000, linewidth: 10} );//azul
 
       //TWALL
       var funciont = objParticulas.funciones.TWall.function;
-      var tWall = texttoFunction(funciont);
+      var tWall = texttoFunction(funciont);//string --> js
       var tgeometry = new THREE.Geometry();
 
       for(var i = 0; i<1000; i++){
@@ -50,11 +50,11 @@ function Particulas ( ){
         x += h;
       }
       if(objParticulas.funciones.TWall.isReflec){
-        var funt = new THREE.Line( tgeometry, material );
+        var funt = new THREE.Line( tgeometry, material );//rojo
       }else{
-        var funt = new THREE.Line( tgeometry, mat2 );
+        var funt = new THREE.Line( tgeometry, mat2 );//azul
       }
-      vsym.scene.add(funt);
+      vsym.scene.add(funt);//agrega a escena
 
       //BWALL
       var funcionb = objParticulas.funciones.BWall.function;
@@ -74,7 +74,7 @@ function Particulas ( ){
       vsym.scene.add(funb);
       var y;
 
-      //LBarrier
+      //LBarrier, solo cortan en twall y bwall
       y = tWall(barizq);
       var lgeometry = new THREE.Geometry();
       lgeometry.vertices.push(new THREE.Vector3( barizq, y, 0) );
@@ -100,10 +100,10 @@ function Particulas ( ){
       }
       vsym.scene.add(barr);
 
-      //dibuja particulas
+      //dibuja particulas y las coloca en la primer posicion
       objParticulas.particulas = json.particles.particle;
       var color = 1;
-      objParticulas.particulas.forEach(function(particula){
+      objParticulas.particulas.forEach(function(particula){//para cada particula se realiza
         var x = particula.pasos[0].x;
         var y = particula.pasos[0].y;
         var p = new THREE.SphereGeometry(.01, 10,10); //(radio, ..., ...)
@@ -116,15 +116,15 @@ function Particulas ( ){
         vsym.scene.add( sphere );
         objParticulas.pars.push(sphere);
 
-        objParticulas.trays.push( [{ "x": x, "y": y }] );
+        objParticulas.trays.push( [{ "x": x, "y": y }] );//se guarda pos para las trayectorias
 
         color += 100;
       });
-      console.log(vsym.scene);
-      console.log(objParticulas.trayso);
+      //console.log(vsym.scene);
+      //console.log(objParticulas.trayso);
       objParticulas.animate();
     }
-
+    //pausa la animacion
     this.pause = function() {
       if(objParticulas.play == true){
         objParticulas.play = false;
@@ -132,14 +132,14 @@ function Particulas ( ){
         objParticulas.play  = true;
       }
     }
-
+    //regresa 5 pasos
     this.regresa = function() {
       objParticulas.play = false;
       objParticulas.paso -= 5;
       objParticulas.setPos();
       vsym.renderer.render(vsym.scene, vsym.camera);
     }
-
+    //avanza 5 pasos
     this.avanzar = function() {
       objParticulas.play = false;
       objParticulas.paso += 5;
@@ -147,7 +147,10 @@ function Particulas ( ){
       vsym.renderer.render(vsym.scene, vsym.camera);
     }
 
-
+    /**actualiza posiciones de las particulas si el paso actual
+    esta dentro del rango de cada trayectoria
+    tambien agreaga las posiciones actuales al objeto trays para
+    que se agregue al dibujo de las trayectorias**/
     this.setPos = function() {
       for(var i = 0; i < objParticulas.particulas.length; i++){
         if(objParticulas.paso < objParticulas.particulas[i].pasos.length){
@@ -157,7 +160,7 @@ function Particulas ( ){
           objParticulas.pars[i].position.setY(y);
           objParticulas.trays[i].push( { "x": x, "y": y } );
         }else if(objParticulas.paso == objParticulas.particulas[i].pasos.length){
-          console.log("particula: " + i);
+          console.log("terminó particula: " + i);
         }
       }
       checkbox = document.getElementById("Checkpt1");

@@ -1,18 +1,23 @@
 function Voronoi ( ){
     MenuRed.call(this);
-    this.puntosred = [];
-    this.colors = {};
+    this.puntosred = []; //puntos (objetos)
+    this.colors = {}; //colores (hexa)
 
-
+    /**recibe desde index.html el RGB del color a convertir en este caso gris
+    y  se lo pasa a setColor junto al checkbox que invoco esta funcion**/
     this.setGris = function(r,g,b) {
       var checkbox = document.getElementById("Check2");
       this.setColor(checkbox,r,g,b);
     }
+    //igual que setGris pero para azul
     this.setBlue  = function(r,g,b){
       var checkbox = document.getElementById("Check1");
       this.setColor(checkbox,r,g,b);
     }
 
+    /**recibe el checkbox que activo el evento y el RGB del color que se quiere la escala
+    con el checkbox se determina la funcion que hara, si esta marcado
+    cambia la escala al color del RGB recibo, si esta desmarcado regresa a su color original**/
     this.setColor = function(checkbox,r,g,b){
       var coloraux, coloraux2, caux;
       if(checkbox.checked==true){
@@ -37,6 +42,8 @@ function Voronoi ( ){
       console.log(objVoronoi.colors);
     }
 
+    /**funcion llamada desde index.js recibe un arreglo con las posiciones y color de cada punto
+    se crean en conjunto de cada color y se agregan a escena**/
     this.drawVoronoi = function(puntos){
       var aspect = 1000 / 800;
       vsym.camera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 );
@@ -95,6 +102,7 @@ function Voronoi ( ){
     };
 
 }
+//recibe elementos de menured.js
 Voronoi.prototype = new MenuRed();
 
 var objVoronoi = new Voronoi();

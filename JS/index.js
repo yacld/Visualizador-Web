@@ -41,14 +41,14 @@ document.getElementById('exampleInputFile').onchange = function(){
     if(vsym.json.hasOwnProperty('p')){
       var puntos = vsym.json.p;
       console.log(puntos);
-      objVoronoi.drawVoronoi(puntos);
-
+      objVoronoi.drawVoronoi(puntos);  //llama funcion drawVoronoi encontrada en voronoi.js
+      //muestra el menu para voronoi
       $('#MenuVoronoi').css({"visibility":"visible", "height":"300px", "width": "auto"})
       $('#voronoiMenu').css({"visibility":"visible"})
 
     }else if(vsym.json.hasOwnProperty('particles')){
       if(vsym.json.type == "2D"){
-        objParticulas.creaEscena(vsym.json);
+        objParticulas.creaEscena(vsym.json); //llama funcion encontrada en particulas.js
       }else{
         alert("3D");
       }
@@ -57,11 +57,12 @@ document.getElementById('exampleInputFile').onchange = function(){
       $('#particulasMenu').css({"visibility":"visible"})
 
     }else if(vsym.json.hasOwnProperty('sitios')){
-      objRedp.drawRed(vsym.json);
-
+      objRedp.drawRed(vsym.json);  //llama funcion encontrada en redporosa.js
+      //muestra el menu para redes porosas
       $('#MenuRedPorosa').css({"visibility":"visible", "height":"300px", "width": "auto"})
       $('#porosMenu').css({"visibility":"visible"})
     }else{
+      //archivo invalido
       alert('Selecciona un archivo JSON valido');
     }
 
