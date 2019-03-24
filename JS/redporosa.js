@@ -149,12 +149,7 @@ function RedPorosa ( ){
 
     this.setBlue =function(r,g,b) {
       var checkbox = document.getElementById("Checkrp1");
-
-      this.setColor(checkbox,r,g,b);
-    }
-
-    this.setColor = function(checkbox,r,g,b) {
-      var coloraux, coloraux2, caux;
+      var coloraux;
       if(checkbox.checked==true){
            objRedp.redporosa.forEach(function(punto){
              coloraux = punto.material.color;
@@ -166,7 +161,6 @@ function RedPorosa ( ){
       } else {
             objRedp.redporosa.forEach(function(punto){
               coloraux = punto.material.color;
-              coloraux2 = punto.material.color;
               if(coloraux.b==r){coloraux.r =1, coloraux.b=0;}
               else if(coloraux.b==g){coloraux.g =1,coloraux.b=0;}
               else if(coloraux.b==b){coloraux.b =1;}
@@ -175,6 +169,10 @@ function RedPorosa ( ){
             });
             objRedp.colorsp = {};
       }
+    }
+
+    this.setColor = function(checkbox,r,g,b) {
+
     }
 
 }

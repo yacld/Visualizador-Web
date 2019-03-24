@@ -205,9 +205,10 @@ Particulas.prototype.animate =function() {
   function avanza(){
     if(vsym.bandera != false){
       if(objParticulas.play != false){
+        objParticulas.paso++;
         objParticulas.setPos();
       }
-      objParticulas.paso++;
+      //objParticulas.paso++;
 
     }
     vsym.renderer.render(vsym.scene, vsym.camera);
