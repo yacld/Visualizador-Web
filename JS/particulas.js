@@ -35,7 +35,7 @@ function Particulas ( ){
 
       var xRange = barder - barizq;
       var h = xRange / 1000; //si se requiere mas detalle en las funciones hacer mas pequeño este valor
-      var x = 0;
+      var x = barizq;
       var material = new THREE.LineBasicMaterial( { color: 0x0000ff, linewidth: 10 } );//rojo
       var mat2 = new THREE.LineBasicMaterial( { color: 0xff0000, linewidth: 10} );//azul
 
@@ -44,7 +44,7 @@ function Particulas ( ){
       var tWall = texttoFunction(funciont);//string --> js
       var tgeometry = new THREE.Geometry();
 
-      for(var i = 0; i<1000; i++){
+      while( x < barder ){
         var y = tWall(x);
         tgeometry.vertices.push(new THREE.Vector3( x, y, 0) );
         x += h;
@@ -60,8 +60,8 @@ function Particulas ( ){
       var funcionb = objParticulas.funciones.BWall.function;
       var bWall = texttoFunction(funcionb);
       var bgeometry = new THREE.Geometry();
-      x = 0;
-      for(var i = 0; i<1000; i++){
+      x = barizq;
+      while( x < barder ){
         var y = bWall(x);
         bgeometry.vertices.push(new THREE.Vector3( x, y, 0) );
         x += h;
@@ -149,7 +149,7 @@ function Particulas ( ){
 
     /**actualiza posiciones de las particulas si el paso actual
     esta dentro del rango de cada trayectoria
-    tambien agreaga las posiciones actuales al objeto trays para
+    tambien agrega las posiciones actuales al objeto trays para
     que se agregue al dibujo de las trayectorias**/
     this.setPos = function() {
       for(var i = 0; i < objParticulas.particulas.length; i++){
