@@ -21,7 +21,7 @@ function Particulas ( ){
 
       vsym.scene = new THREE.Scene();
       //cambia el color del background a blaco, el color es valor hexadecimal
-      vsym.scene.background = new THREE.Color( 0xffffff );
+      //vsym.scene.background = new THREE.Color( 0xffffff );
       espacio.appendChild( vsym.renderer.domElement );
 
       /**vsym.controls = new THREE.OrbitControls( vsym.camera, vsym.renderer.domElement );
@@ -38,69 +38,90 @@ function Particulas ( ){
       var xRange = barder - barizq;
       var h = xRange / 1000; //si se requiere mas detalle en las funciones hacer mas pequeño este valor
       var x = barizq;
-      var material = new THREE.LineBasicMaterial( { color: 0x0000ff, linewidth: 10 } );//rojo
-      var mat2 = new THREE.LineBasicMaterial( { color: 0xff0000, linewidth: 10} );//azul
+      var material = new THREE.LineBasicMaterial( { color: 0x0000ff, linewidth: 100 } );//rojo
+      var mat2 = new THREE.LineBasicMaterial( { color: 0xff0000, linewidth: 100 } );//azul
 
-      //TWALL
+      var formaCanal = new THREE.Shape ();
+
+      //definiendo funciones
       var funciont = objParticulas.funciones.TWall.function;
       var tWall = texttoFunction(funciont);//string --> js
-      var tgeometry = new THREE.Geometry();
+      var funcionb = objParticulas.funciones.BWall.function;
+      var bWall = texttoFunction(funcionb);
 
+      //TWALL
+      var tgeometry = new THREE.Geometry();
+      var p0 = tWall(x);
+      formaCanal.moveTo ( x+h, p0 ); // punto inicial de la forma del canal
       while( x < barder ){
         var y = tWall(x);
         tgeometry.vertices.push(new THREE.Vector3( x, y, 0) );
         x += h;
+        if(x<=barder){formaCanal.lineTo( x, y-h );} //menos h para que no tape la linea de la frontera
+
       }
       if(objParticulas.funciones.TWall.isReflec){
         var funt = new THREE.Line( tgeometry, material );//rojo
       }else{
         var funt = new THREE.Line( tgeometry, mat2 );//azul
       }
-      vsym.scene.add(funt);//agrega a escena
+
+      var y;
+      //RBarrier
+      y = tWall(barder);
+      var rgeometry = new THREE.Geometry();
+      rgeometry.vertices.push(new THREE.Vector3( barder, y, 0) );
+      formaCanal.lineTo( barder-h, y );
+      y = bWall(barder);
+      rgeometry.vertices.push(new THREE.Vector3( barder, y, 0) );
+      formaCanal.lineTo( barder-h, y );
+      if(objParticulas.funciones.RBarrier.isReflec){
+        var barr = new THREE.Line( rgeometry, material );
+      }else{
+        var barr = new THREE.Line( rgeometry, mat2 );
+      }
+
 
       //BWALL
-      var funcionb = objParticulas.funciones.BWall.function;
-      var bWall = texttoFunction(funcionb);
       var bgeometry = new THREE.Geometry();
-      x = barizq;
-      while( x < barder ){
+      x = barder;
+      while( x > barizq ){
         var y = bWall(x);
         bgeometry.vertices.push(new THREE.Vector3( x, y, 0) );
-        x += h;
+        x -= h;
+        if(x>=barizq){formaCanal.lineTo( x, y+3*h );}// mas 3h para que no tape la linea del canal
       }
       if(objParticulas.funciones.BWall.isReflec){
         var funb = new THREE.Line( bgeometry, material );
       }else{
         var funb = new THREE.Line( bgeometry, mat2 );
       }
-      vsym.scene.add(funb);
-      var y;
+
 
       //LBarrier, solo cortan en twall y bwall
-      y = tWall(barizq);
+      y = bWall(barizq);
       var lgeometry = new THREE.Geometry();
       lgeometry.vertices.push(new THREE.Vector3( barizq, y, 0) );
-      y = bWall(barizq);
+      formaCanal.lineTo( barizq+h, y );
+      y = tWall(barizq);
       lgeometry.vertices.push(new THREE.Vector3( barizq, y, 0) );
+      formaCanal.lineTo( barizq+h, y );
+
       if(objParticulas.funciones.LBarrier.isReflec){
         var barl = new THREE.Line( lgeometry, material );
       }else{
         var barl = new THREE.Line( lgeometry, mat2 );
       }
-      vsym.scene.add(barl);
 
-      //RBarrier
-      y = tWall(barder);
-      var rgeometry = new THREE.Geometry();
-      rgeometry.vertices.push(new THREE.Vector3( barder, y, 0) );
-      y = bWall(barder);
-      rgeometry.vertices.push(new THREE.Vector3( barder, y, 0) );
-      if(objParticulas.funciones.RBarrier.isReflec){
-        var barr = new THREE.Line( rgeometry, material );
-      }else{
-        var barr = new THREE.Line( rgeometry, mat2 );
-      }
+      //crea canal y agrega a escena, luego agrega barreras del canal
+      var cgeometry = new THREE.ShapeGeometry( formaCanal );
+      var materialc = new THREE.MeshBasicMaterial( {color: 0x555555} );
+      var canal = new THREE.Mesh( cgeometry, materialc );
+      vsym.scene.add(canal);
+      vsym.scene.add(funt);//agrega a escena
       vsym.scene.add(barr);
+      vsym.scene.add(funb);
+      vsym.scene.add(barl);
 
       //dibuja particulas y las coloca en la primer posicion
       objParticulas.particulas = json.particles.particle;
