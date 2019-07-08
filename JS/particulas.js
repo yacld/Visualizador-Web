@@ -20,6 +20,7 @@ function Particulas ( ){
       vsym.camera.position.set(0, 0, 1);
 
       vsym.scene = new THREE.Scene();
+      vsym.scene.background = new THREE. Color( 0xffffff );
       espacio.appendChild( vsym.renderer.domElement );
 
       /**vsym.controls = new THREE.OrbitControls( vsym.camera, vsym.renderer.domElement );
