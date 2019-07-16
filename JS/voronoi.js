@@ -51,6 +51,7 @@ function Voronoi ( ){
       vsym.camera.position.set(350, 350, 350);
 
       vsym.scene = new THREE.Scene();
+      vsym.scene.background = new THREE.Color( 0xD3D3D3 );
       espacio.appendChild( vsym.renderer.domElement );
       vsym.controls = new THREE.OrbitControls( vsym.camera, vsym.renderer.domElement );
 

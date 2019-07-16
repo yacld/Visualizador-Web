@@ -21,7 +21,7 @@ function Particulas ( ){
 
       vsym.scene = new THREE.Scene();
       //cambia el color del background a blaco, el color es valor hexadecimal
-      //vsym.scene.background = new THREE.Color( 0xffffff );
+      vsym.scene.background = new THREE.Color( 0xD3D3D3 );
       espacio.appendChild( vsym.renderer.domElement );
 
       /**vsym.controls = new THREE.OrbitControls( vsym.camera, vsym.renderer.domElement );
@@ -38,8 +38,8 @@ function Particulas ( ){
       var xRange = barder - barizq;
       var h = xRange / 1000; //si se requiere mas detalle en las funciones hacer mas pequeño este valor
       var x = barizq;
-      var material = new THREE.LineBasicMaterial( { color: 0x0000ff, linewidth: 100 } );//rojo
-      var mat2 = new THREE.LineBasicMaterial( { color: 0xff0000, linewidth: 100 } );//azul
+      var material = new THREE.LineBasicMaterial( { color: 0x0000ff, linewidth: 100 } );//azul
+      var mat2 = new THREE.LineBasicMaterial( { color: 0xff0000, linewidth: 100 } );//rojo
 
       var formaCanal = new THREE.Shape ();
 
@@ -61,9 +61,9 @@ function Particulas ( ){
 
       }
       if(objParticulas.funciones.TWall.isReflec){
-        var funt = new THREE.Line( tgeometry, material );//rojo
+        var funt = new THREE.Line( tgeometry, material );//azul
       }else{
-        var funt = new THREE.Line( tgeometry, mat2 );//azul
+        var funt = new THREE.Line( tgeometry, mat2 );//rojo
       }
 
       var y;
@@ -85,7 +85,7 @@ function Particulas ( ){
       //BWALL
       var bgeometry = new THREE.Geometry();
       x = barder;
-      while( x > barizq ){
+      while( x >= barizq-h ){
         var y = bWall(x);
         bgeometry.vertices.push(new THREE.Vector3( x, y, 0) );
         x -= h;
@@ -115,7 +115,7 @@ function Particulas ( ){
 
       //crea canal y agrega a escena, luego agrega barreras del canal
       var cgeometry = new THREE.ShapeGeometry( formaCanal );
-      var materialc = new THREE.MeshBasicMaterial( {color: 0x555555} );
+      var materialc = new THREE.MeshBasicMaterial( {color: 0x9B9B9B} );
       var canal = new THREE.Mesh( cgeometry, materialc );
       vsym.scene.add(canal);
       vsym.scene.add(funt);//agrega a escena

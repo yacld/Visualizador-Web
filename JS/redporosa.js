@@ -10,7 +10,7 @@ function RedPorosa ( ){
       vsym.camera.position.set(350, 350, 700);
       vsym.camera.lookAt(0, 0, 0);
       vsym.scene = new THREE.Scene();
-
+      vsym.scene.background = new THREE.Color( 0xD3D3D3 );
       espacio.appendChild( vsym.renderer.domElement );
       //scene.setValues( {background:''} );
       vsym.controls = new THREE.OrbitControls( vsym.camera, vsym.renderer.domElement );
